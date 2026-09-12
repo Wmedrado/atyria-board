@@ -843,7 +843,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CombatResolver applies the documented scalar power-minus-armor structural contract. Dirty-room analysis records legacy per-damage-type protection factor/max/effect reduction semantics; the model lacks those inputs and remains unverified.",
+      "implementedNote": "CombatResolver retains the scalar health contract and CombatTables now expose the observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data; per-damage-type effect ordering and oracle verification remain pending.",
       "verified": false
     },
     {
