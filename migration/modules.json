@@ -926,7 +926,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CharacterProgression preserves bounded integer attributes, exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands, and models one-point skill advancement with reset plus allocation-free child-to-parent remainder propagation; full skill-tree, catalyzer, and oracle integration remain pending.",
+      "implementedNote": "CharacterProgression preserves bounded integer attributes, exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands, models one-point skill advancement with reset plus allocation-free child-to-parent remainder propagation, and enforces the observed F/M/C/H default family limit; full skill-tree, catalyzer, and oracle integration remain pending.",
       "verified": false
     },
     {
