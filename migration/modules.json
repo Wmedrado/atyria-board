@@ -905,7 +905,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CraftResolver validates positive integer inputs and available materials, consumes only on success, and reproduces the observed 101-row craft success table with clipped levels, partial-roll interpolation and fade clipping; full craft/forage integration and oracle comparison remain pending.",
+      "implementedNote": "CraftResolver validates positive integer inputs and available materials, reproduces the observed 101-row craft success table with clipped levels, partial-roll interpolation and fade clipping, normalizes disallowed partial success, and computes final quality with integer flooring; full craft/forage integration and oracle comparison remain pending.",
       "verified": false
     },
     {
