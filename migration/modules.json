@@ -96,7 +96,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Reads the observed NeL BNP trailer index (directory offset in the final uint32, byte-sized names, uint32 size and position) through mapped spans; golden tests pass and the installed bagne_shapes.bnp corpus opens with 27 entries.",
+      "implementedNote": "JobScheduler retains explicit Action draining and adds allocation-avoiding struct IJob dispatch through the thread pool; 32 core tests pass.",
       "verified": false
     },
     {
@@ -166,7 +166,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "Reads the observed NeL BNP trailer index (directory offset in the final uint32, byte-sized names, uint32 size and position) through mapped spans; golden tests pass and the installed bagne_shapes.bnp corpus opens with 27 entries.",
       "verified": false
     },
     {
