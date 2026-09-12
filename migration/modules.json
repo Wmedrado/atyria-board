@@ -226,8 +226,8 @@
         "assets.mesh"
       ],
       "ported": true,
-      "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implemented": false,
+      "implementedNote": "Bone hierarchy/rest positions parse, but rotation, keyframe tracks, interpolation, and the neutral animation contract are still missing.",
       "verified": false
     },
     {
@@ -266,8 +266,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": true,
-      "implementedNote": "SeededRandom implements deterministic PCG-XSH-RR, unbiased bounded uints, signed ranges, booleans, and Fix64 values; Atyria.Core.Tests passes with 31 tests including golden vectors and invalid-range cases.",
+      "implemented": false,
+      "implementedNote": "Basic shape/name/position/scale parsing exists, but rotation and the documented visibility/collision/lighting flags are not represented.",
       "verified": false
     },
     {
