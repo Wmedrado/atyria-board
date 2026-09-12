@@ -884,7 +884,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Structural vectors cover successful casts, mana exhaustion, invalid cost/power, state preservation, zero-cost casts, and result reporting in Atyria.Sim.Tests.",
+      "implementedNote": "Fixed-point magic cast and damage-factor resolution cover successful casts, resistance rejection/cap, factor validation, mana exhaustion, invalid cost/power, state preservation, zero-cost casts, and result reporting; resistance chance tables remain oracle-pending.",
       "verified": false
     },
     {
