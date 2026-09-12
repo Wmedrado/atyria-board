@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix, and MeshBasePrefixReader now covers the real CMeshBase v1 rectangle prefix plus the v4 sphere/box prefix with dirty-room vectors in Atyria.Assets.Tests. Static rectangle geometry is decoded; MeshDefinition remains synthetic and full material, .shape, and MRM body decoding with two real LOD levels remains pending measured corpus data.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle and v4 sphere/box prefixes, and MeshMaterialPrefixReader reaches the measured v6 geometry boundary with dirty-room vectors. Static rectangle geometry is decoded; MeshDefinition remains synthetic and full v4 geometry plus MRM body decoding with two real LOD levels remains pending measured corpus data.",
       "verified": false
     },
     {
@@ -926,7 +926,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CharacterProgression preserves bounded integer attributes, exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands, and models one-point skill advancement with reset and parent-propagation remainder; full skill-tree, catalyzer, and oracle integration remain pending.",
+      "implementedNote": "CharacterProgression preserves bounded integer attributes, exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands, and models one-point skill advancement with reset plus allocation-free child-to-parent remainder propagation; full skill-tree, catalyzer, and oracle integration remain pending.",
       "verified": false
     },
     {
