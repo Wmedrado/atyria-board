@@ -4,7 +4,7 @@
     "effort": "1 tiny, 2 small, 3 medium, 4 large, 5 very large. Derived from reference lines, then adjusted where the reference is bloated or unusually dense.",
     "risk": "1 routine, 2 some unknowns, 3 exactness or fidelity matters, 4 hard to verify or heavily unknown, 5 could invalidate the plan.",
     "difficulty": "effort x risk. Bands: 1-4 green, 5-9 yellow, 10-14 orange, 15-25 red.",
-    "progress": "ported = the code exists and compiles. verified = it is checked against the oracle or a real corpus. Ported without verified is not done."
+    "progress": "ported = the types exist and the project compiles. implemented = the module actually does what its spec says, and implementedNote says what was exercised to believe that. verified = checked against the oracle or a real corpus. Ported alone is scaffolding: 68 modules were once marked ported on 216 lines of skeleton, which is why the middle axis exists."
   },
   "phases": {
     "0": "Foundations",
@@ -28,6 +28,8 @@
       "why": "Determinism rests on it. A subtle rounding difference diverges every replay, and the symptom appears far from the cause.",
       "needs": [],
       "ported": true,
+      "implemented": true,
+      "implementedNote": "Golden vectors cover Q32.32 representation, arithmetic, square root, error cases, and vector magnitude/normalization invariants.",
       "verified": false
     },
     {
@@ -42,6 +44,8 @@
       "why": "Must be reproducible across platforms and stable forever: changing the sequence invalidates every stored replay.",
       "needs": [],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -56,6 +60,24 @@
       "why": "Shapes the allocation behaviour of everything above it, so getting it wrong is expensive to undo.",
       "needs": [],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "core.jobs",
+      "project": "Atyria.Core",
+      "name": "Job system and frame pipeline",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 4,
+      "why": "The extract boundary between simulation and renderer is a data-layout decision, so it is taken now or not at all. Every other renderer feature can be added later; parallelism cannot.",
+      "needs": [],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -73,6 +95,8 @@
         "core.rng"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -87,6 +111,8 @@
       "why": "Protects the premise of the whole project, and a clean result proves less than people assume.",
       "needs": [],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -100,7 +126,27 @@
       "risk": 3,
       "why": "Every fidelity claim in phase 4 depends on it. Partly exists already as the playtest harness.",
       "needs": [],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "tools.bench",
+      "project": "tools/bench",
+      "name": "Frame benchmark and budget gate",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 2,
+      "why": "A deterministic scripted traversal reporting p50, p99 and per-pass milliseconds. Built before the renderer has features, because a budget nobody measures is a wish.",
+      "needs": [
+        "render.capture"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -119,6 +165,8 @@
         "core.ids"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -136,7 +184,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -154,7 +204,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -173,7 +225,9 @@
         "assets.archive",
         "assets.mesh"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -191,7 +245,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -209,7 +265,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -227,7 +285,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -245,7 +305,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -263,7 +325,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -281,7 +345,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -293,11 +359,32 @@
       "refLines": 0,
       "effort": 4,
       "risk": 5,
-      "why": "C# hands you no GPU abstraction, so this is written here. Choosing C# made this larger, and it is the single decision that could invalidate the plan.",
+      "why": "C# hands you no GPU abstraction, so this is written here: Vulkan 1.3, one backend for Windows and Linux, bindless and GPU-driven. The open measurement is the cost of recording commands from managed code, and it is the one that could still invalidate the plan.",
       "needs": [
         "core.ids"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "render.framegraph",
+      "project": "Atyria.Render",
+      "name": "Frame graph",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 3,
+      "why": "Passes declare what they read and write; barriers and transient memory are derived once and cached. Hand-written Vulkan barriers across a dozen passes is where the bugs live.",
+      "needs": [
+        "render.backend",
+        "core.jobs"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -311,13 +398,16 @@
       "refLines": 40000,
       "effort": 5,
       "risk": 5,
-      "why": "Whether this holds the reference's draw distance and frame time is UNMEASURED. First risk to retire.",
+      "why": "Whether this holds the reference's draw distance inside the 1.8 ms terrain budget is UNMEASURED. First risk to retire.",
       "needs": [
         "render.backend",
         "assets.zone",
-        "world.stream"
+        "world.stream",
+        "render.framegraph"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -335,9 +425,30 @@
       "needs": [
         "render.backend",
         "assets.mesh",
-        "assets.skeleton"
+        "assets.skeleton",
+        "render.framegraph"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "render.lighting",
+      "project": "Atyria.Render",
+      "name": "Lighting, shadows and global illumination",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 4,
+      "risk": 3,
+      "why": "Not a port. Cascaded shadows, deferred lighting and re-baked GI are what make 2004 geometry read as lit. Budgeted at 2.0 ms of the 7.1 ms GPU frame.",
+      "needs": [
+        "render.framegraph"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -351,18 +462,21 @@
       "refLines": 20000,
       "effort": 3,
       "risk": 2,
-      "why": "Visual, self-evident when wrong.",
+      "why": "Visual, self-evident when wrong. GPU-simulated, lit and depth-faded, with density a player setting: the same art, orders of magnitude more of it.",
       "needs": [
         "render.backend",
-        "assets.particle"
+        "assets.particle",
+        "render.framegraph"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
       "id": "render.sky",
       "project": "Atyria.Render",
-      "name": "Sky, weather, day and night",
+      "name": "Sky, atmosphere, weather and time of day",
       "phase": 2,
       "reference": [
         "nel/src/3d (cloud, sky)",
@@ -371,11 +485,14 @@
       "refLines": 12000,
       "effort": 3,
       "risk": 2,
-      "why": "Strongly shapes how the world reads, but a mistake is cosmetic.",
+      "why": "The highest visual return in the project, and it costs no art: a landscape reads almost entirely through its air. A 2004 skybox with a fog colour is why 2004 landscapes look 2004.",
       "needs": [
-        "render.backend"
+        "render.backend",
+        "render.framegraph"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -389,12 +506,51 @@
       "refLines": 10000,
       "effort": 3,
       "risk": 3,
-      "why": "Density is a frame-time problem as much as a visual one.",
+      "why": "Density is a frame-time problem as much as a visual one, and a modern GPU affords 10 to 50 times the 2004 count of the same art.",
       "needs": [
         "render.backend",
-        "world.stream"
+        "world.stream",
+        "render.framegraph"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "render.postfx",
+      "project": "Atyria.Render",
+      "name": "Post-processing and tonemapping",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 2,
+      "why": "Not a port. Real tonemapping, GTAO, bloom, reflections and grading cost no art at all and change every frame in the game. Each one individually switchable.",
+      "needs": [
+        "render.framegraph"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "render.upscale",
+      "project": "Atyria.Render",
+      "name": "Anti-aliasing and upscaling",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 3,
+      "why": "TAA with FSR as the vendor-neutral baseline, DLSS and XeSS optional. The main lever for reaching 140 fps on weak hardware, which makes it a performance module as much as an image one.",
+      "needs": [
+        "render.postfx"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -408,9 +564,12 @@
       "risk": 2,
       "why": "Golden-frame testing depends on it being genuinely deterministic, not approximately.",
       "needs": [
-        "render.backend"
+        "render.backend",
+        "render.framegraph"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -430,6 +589,8 @@
         "assets.ig"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -449,6 +610,8 @@
         "core.ids"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -468,6 +631,8 @@
         "core.fixed"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -487,6 +652,8 @@
         "world.grid"
       ],
       "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -503,7 +670,9 @@
       "risk": 3,
       "why": "474 properties and 335 impulses. A previous attempt assumed flat message ids and was wrong: addressing is a route through the tree.",
       "needs": [],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -521,7 +690,9 @@
       "needs": [
         "contract.compiler"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -540,7 +711,9 @@
       "needs": [
         "net.codec"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -559,7 +732,9 @@
         "net.codec",
         "world.spatial"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -573,11 +748,13 @@
       "refLines": 2468,
       "effort": 1,
       "risk": 3,
-      "why": "10 Hz is a fidelity constraint: gameplay timing is expressed in ticks, so changing the rate rescales the whole game.",
+      "why": "Gameplay timing is expressed in ticks, so extraction converts every duration to wall-clock time once. After that the rate is free: it starts at the reference's 10 Hz and can rise for responsiveness without rescaling a single cooldown.",
       "needs": [
         "core.fixed"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -596,7 +773,9 @@
       "needs": [
         "net.transport"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -616,7 +795,9 @@
         "world.spatial",
         "server.tick"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -637,7 +818,9 @@
         "core.fixed",
         "server.tick"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -658,7 +841,9 @@
         "server.tick",
         "content.extract"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -676,7 +861,9 @@
       "needs": [
         "sim.combat"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -695,7 +882,9 @@
         "sim.combat",
         "sim.effects"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -714,7 +903,9 @@
         "sim.combat",
         "content.extract"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -733,7 +924,9 @@
         "content.extract",
         "core.fixed"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -752,7 +945,9 @@
         "sim.character",
         "content.extract"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -773,7 +968,9 @@
         "server.entities",
         "assets.primitive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -792,7 +989,9 @@
         "assets.primitive",
         "sim.character"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -810,7 +1009,9 @@
       "needs": [
         "sim.character"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -829,7 +1030,9 @@
         "sim.guild",
         "sim.combat"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -847,7 +1050,9 @@
       "needs": [
         "sim.inventory"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -865,7 +1070,9 @@
       "needs": [
         "net.transport"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -884,7 +1091,9 @@
       "needs": [
         "sim.character"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -902,7 +1111,9 @@
       "needs": [
         "render.backend"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -921,7 +1132,9 @@
         "ui.engine",
         "contract.compiler"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -939,7 +1152,9 @@
       "needs": [
         "ui.bindings"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -957,7 +1172,9 @@
       "needs": [
         "ui.bindings"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -977,7 +1194,9 @@
         "world.stream",
         "render.mesh"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -997,7 +1216,28 @@
         "render.mesh",
         "assets.skeleton"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "client.settings",
+      "project": "Atyria.Client",
+      "name": "Graphics settings and presets",
+      "phase": 5,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 2,
+      "why": "Every option is data carrying its measured cost in milliseconds. Presets are derived from measurement rather than taste, and first run auto-detects by benchmarking instead of matching GPU name strings.",
+      "needs": [
+        "render.upscale",
+        "tools.bench"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1015,7 +1255,9 @@
       "needs": [
         "assets.archive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1035,7 +1277,29 @@
         "assets.sheet",
         "assets.primitive"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
+      "verified": false
+    },
+    {
+      "id": "tools.uplift",
+      "project": "tools/uplift",
+      "name": "Material uplift and GI bake",
+      "phase": 6,
+      "reference": [],
+      "refLines": 0,
+      "effort": 4,
+      "risk": 3,
+      "why": "Offline. Derives normal and roughness from diffuse-only 2004 textures, delights the albedo, and re-bakes global illumination from the existing geometry. Compute time instead of artist time; derived maps inherit the art licence.",
+      "needs": [
+        "assets.texture",
+        "assets.zone",
+        "assets.ig"
+      ],
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1051,7 +1315,9 @@
       "needs": [
         "content.extract"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1068,7 +1334,9 @@
         "server.tick",
         "server.entities"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1084,7 +1352,9 @@
       "needs": [
         "qa.control"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     },
     {
@@ -1100,7 +1370,9 @@
       "needs": [
         "qa.control"
       ],
-      "ported": false,
+      "ported": true,
+      "implemented": false,
+      "implementedNote": "",
       "verified": false
     }
   ]

@@ -90,13 +90,18 @@
   <h1>Atyria migration board</h1>
   <div class="sub">
     Every module we have to write, mapped to the reference code it replaces.
-    <b>Ported</b> means the code exists and compiles. <b>Verified</b> means someone checked it.
-    Only verified counts.
+    <b>Ported</b> means the types exist and it compiles. <b>Implemented</b> means the module
+    actually does its job, with a note saying what was exercised. <b>Verified</b> means someone
+    independent checked it. Only verified counts.
   </div>
   <div class="bars">
     <div class="bar">
       <div class="bar-head"><span>Ported</span><b id="pv">0 / 0</b></div>
       <div class="track"><div class="fill" id="pf" style="background:var(--accent)"></div></div>
+    </div>
+    <div class="bar">
+      <div class="bar-head"><span>Implemented</span><b id="iv">0 / 0</b></div>
+      <div class="track"><div class="fill" id="if_" style="background:var(--accent)"></div></div>
     </div>
     <div class="bar">
       <div class="bar-head"><span>Verified</span><b id="vv">0 / 0</b></div>
@@ -118,7 +123,8 @@
   </select>
   <button data-f="" class="on">All</button>
   <button data-f="todo">Not started</button>
-  <button data-f="ported">Ported, unverified</button>
+  <button data-f="ported">Compiles only</button>
+  <button data-f="impl">Implemented, unverified</button>
   <button data-f="ready">Ready now</button>
   <button data-f="done">Verified</button>
   <span class="spacer"></span>
@@ -130,8 +136,9 @@
 <div id="out"></div>
 
 <div class="note">
-  <b>Who marks what.</b> An agent sets <b>ported</b> by committing to
-  <code>docs/migration/modules.json</code>: it knows whether its code compiles.
+  <b>Who marks what.</b> An agent sets <b>ported</b> and <b>implemented</b> by committing to
+  <code>docs/migration/modules.json</code>: it knows whether its code compiles, and marking
+  <b>implemented</b> costs it a written sentence about what it exercised. Hover the tick to read it.
   <b>Verified</b> is yours to click, because a tool certifying its own work is not
   verification. Your clicks are held in this browser and shown with a dashed outline until
   you press <b>Copy updated modules.json</b> and commit the result, which is what makes them
@@ -191,8 +198,8 @@ function toggle(id, key) {
   const m = data.modules.find(x => x.id === id);
   const now = !state(m, key);
   // Verifying something that was never ported would be a claim about nothing.
-  if (key === 'verified' && now && !state(m, 'ported')) {
-    alert('This module is not ported yet. Verifying it would be a claim about code that does not exist.');
+  if (key === 'verified' && now && !state(m, 'implemented')) {
+    alert('This module is not implemented yet - it only compiles. Verifying it would be a claim about code that does not do anything.');
     return;
   }
   local[id] = local[id] || {};
@@ -206,11 +213,14 @@ function render() {
   const mods = data.modules.map(m => ({ ...m, difficulty: m.effort * m.risk }));
   const total = mods.length;
   const ported = mods.filter(m => state(m, 'ported')).length;
+  const implemented = mods.filter(m => state(m, 'implemented')).length;
   const verified = mods.filter(m => state(m, 'verified')).length;
 
   pv.textContent = `${ported} / ${total}`;
+  iv.textContent = `${implemented} / ${total}`;
   vv.textContent = `${verified} / ${total}`;
   pf.style.width = `${(100 * ported / total).toFixed(1)}%`;
+  if_.style.width = `${(100 * implemented / total).toFixed(1)}%`;
   vf.style.width = `${(100 * verified / total).toFixed(1)}%`;
 
   const dirty = Object.keys(local).length;
@@ -225,7 +235,8 @@ function render() {
   if (wantBand === 'r') rows = rows.filter(m => m.difficulty >= 15);
   if (wantBand === 'o') rows = rows.filter(m => m.difficulty >= 10);
   if (filter === 'todo') rows = rows.filter(m => !state(m, 'ported'));
-  if (filter === 'ported') rows = rows.filter(m => state(m, 'ported') && !state(m, 'verified'));
+  if (filter === 'ported') rows = rows.filter(m => state(m, 'ported') && !state(m, 'implemented'));
+  if (filter === 'impl') rows = rows.filter(m => state(m, 'implemented') && !state(m, 'verified'));
   if (filter === 'done') rows = rows.filter(m => state(m, 'verified'));
   if (filter === 'ready') rows = rows.filter(m => isReady(m));
 
@@ -242,7 +253,7 @@ function render() {
   let html = `<table><thead><tr>
     <th class="num">#</th><th>Module</th><th class="num col-e">E</th><th class="num col-r">R</th><th class="num">Dif</th>
     <th class="num col-ref">Ref lines</th><th class="th-refs">Replaces</th><th class="th-why">Why the risk</th>
-    <th class="mid">Ported</th><th class="mid">Verify</th></tr></thead><tbody>`;
+    <th class="mid">Ported</th><th class="mid">Impl</th><th class="mid">Verify</th></tr></thead><tbody>`;
 
   for (const [key, group] of [...groups.entries()].sort((a, b) => a[0] - b[0])) {
     group.sort((a, b) => (waveOf.get(a.id) - waveOf.get(b.id)) || (b.difficulty - a.difficulty));
@@ -250,10 +261,10 @@ function render() {
     const label = groupByWave
       ? `Wave ${key} &middot; ${key === 1 ? 'nothing blocks these' : 'unblocked once wave ' + (key - 1) + ' is verified'}`
       : `Phase ${key} &middot; ${data.phases[key]}`;
-    html += `<tr class="phase-row"><td colspan="10">${label} &middot; ${done}/${group.length} verified</td></tr>`;
+    html += `<tr class="phase-row"><td colspan="11">${label} &middot; ${done}/${group.length} verified</td></tr>`;
     for (const m of group) {
       const b = band(m.difficulty);
-      const pOn = state(m, 'ported'), vOn = state(m, 'verified');
+      const pOn = state(m, 'ported'), iOn = state(m, 'implemented'), vOn = state(m, 'verified');
       html += `<tr${isReady(m) ? ' class="ready"' : ''}>
         <td class="num">${waveOf.get(m.id)}</td>
         <td><div class="name">${m.name}</div><div class="proj">${m.project}</div></td>
@@ -264,6 +275,8 @@ function render() {
         <td class="why">${m.why}</td>
         <td class="mid"><button class="check ${pOn ? 'done' : ''} ${isLocal(m, 'ported') ? 'local' : ''} locked"
             title="Agents set this by committing modules.json" disabled>&#10003;</button></td>
+        <td class="mid"><button class="check ${iOn ? 'done' : ''} ${isLocal(m, 'implemented') ? 'local' : ''} locked"
+            title="${iOn ? (m.implementedNote || '').replace(/"/g, '&quot;') : 'Agents set this, and must say what they exercised'}" disabled>&#10003;</button></td>
         <td class="mid"><button class="check ${vOn ? 'done' : ''} ${isLocal(m, 'verified') ? 'local' : ''}"
             data-id="${m.id}" title="Yours to click">&#10003;</button></td>
       </tr>`;
@@ -281,7 +294,7 @@ const bandSel = document.getElementById('band');
 document.getElementById('export').onclick = async () => {
   const merged = {
     ...data,
-    modules: data.modules.map(m => ({ ...m, ported: state(m, 'ported'), verified: state(m, 'verified') })),
+    modules: data.modules.map(m => ({ ...m, ported: state(m, 'ported'), implemented: state(m, 'implemented'), verified: state(m, 'verified') })),
   };
   const text = JSON.stringify(merged, null, 2) + '\n';
   try {
