@@ -27,7 +27,7 @@
       "risk": 4,
       "why": "Determinism rests on it. A subtle rounding difference diverges every replay, and the symptom appears far from the cause.",
       "needs": [],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -41,7 +41,7 @@
       "risk": 3,
       "why": "Must be reproducible across platforms and stable forever: changing the sequence invalidates every stored replay.",
       "needs": [],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -55,7 +55,7 @@
       "risk": 2,
       "why": "Shapes the allocation behaviour of everything above it, so getting it wrong is expensive to undo.",
       "needs": [],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -72,7 +72,7 @@
         "core.fixed",
         "core.rng"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -86,7 +86,7 @@
       "risk": 3,
       "why": "Protects the premise of the whole project, and a clean result proves less than people assume.",
       "needs": [],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -118,7 +118,7 @@
       "needs": [
         "core.ids"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -297,7 +297,7 @@
       "needs": [
         "core.ids"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -356,7 +356,7 @@
         "render.backend",
         "assets.particle"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -375,7 +375,7 @@
       "needs": [
         "render.backend"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -394,7 +394,7 @@
         "render.backend",
         "world.stream"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -410,7 +410,7 @@
       "needs": [
         "render.backend"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -429,7 +429,7 @@
         "assets.zone",
         "assets.ig"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -448,7 +448,7 @@
         "world.grid",
         "core.ids"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -467,7 +467,7 @@
         "assets.collision",
         "core.fixed"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
@@ -486,7 +486,7 @@
         "core.fixed",
         "world.grid"
       ],
-      "ported": false,
+      "ported": true,
       "verified": false
     },
     {
