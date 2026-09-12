@@ -1113,7 +1113,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "UIWidget tree and layout tested in Atyria.Ui.Tests/Engine/UIWidgetTests.",
+      "implementedNote": "UIWidget tree and anchor layout tested in Atyria.Ui.Tests/Engine/UIWidgetTests; authored tab/list/scroll_text/bar/bar3/radar kinds are resolved by HudWindowLoader and exercised by the outgame and HUD layout proofs.",
       "verified": false
     },
     {
@@ -1154,7 +1154,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "hud/windows JSON is re-authored from observation (login 240×26 fields, five vertical 128×20 select slots, in-world chat/target at 1280×720). HudWindowLoader builds widget children and skips boot screens for the in-world HUD. Oracle comparison remains pending.",
+      "implementedNote": "hud/windows JSON is re-authored from observation (login/password 240×26 fields, five vertical 128×20 select slots, four appearance buttons, in-world chat/target at 1280×720). HudWindowLoader builds widget children and skips boot screens for the in-world HUD; tools/proofs/outgame_layout_proof.mjs and tools/proofs/ui_hud_geometry_proof.mjs pass. Oracle comparison remains pending.",
       "verified": false
     },
     {
@@ -1196,7 +1196,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "ClientSession covers login/select/create/in-world states. Outgame layout is the observed 800×600 (vertical 128×20 slots, login 240×26, Next confirms Play/Create). In-world HUD draws authored chat/target; I/C/M toggle sheets. Zone patches fill the view after admission. Replicated motion is smoothed against a smoothed server clock (ServerTickSmoother/PositionSmoother) with per-entity animation transitions and collision-resolved reconciliation; the window loop now feeds authoritative samples and advances presentation smoothing in online play, proven by tools/proofs/client_session_smoothing_proof.mjs. QA skip remains a CLI flag, not a widget. Oracle comparison remains pending.",
+      "implementedNote": "ClientSession covers login/select/create/in-world states. Outgame layout is the observed 1024×768 (vertical 128×20 slots, login 240×26, Next confirms Play/Create). In-world HUD draws authored chat/target; I/C/M toggle sheets. Zone patches fill the view after admission. Replicated motion is smoothed against a smoothed server clock (ServerTickSmoother/PositionSmoother) with per-entity animation transitions and collision-resolved reconciliation; the window loop now feeds authoritative samples and advances presentation smoothing in online play, proven by tools/proofs/client_session_smoothing_proof.mjs. Outgame and HUD geometry proofs pass; QA skip remains a CLI flag, not a widget. Oracle comparison remains pending.",
       "verified": false
     },
     {
