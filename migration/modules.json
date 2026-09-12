@@ -884,7 +884,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Fixed-point magic cast and damage-factor resolution cover successful casts, resistance rejection/cap, factor validation, mana exhaustion, invalid cost/power, state preservation, zero-cost casts, and result reporting; resistance chance tables remain oracle-pending.",
+      "implementedNote": "Fixed-point magic cast, direct-resistance table lookup/interpolation, and damage-factor resolution cover successful casts, clipped levels, partial success, resistance rejection/cap, factor validation, mana exhaustion, invalid cost/power, state preservation, zero-cost casts, and result reporting; stateful resistance increases remain oracle-pending.",
       "verified": false
     },
     {
