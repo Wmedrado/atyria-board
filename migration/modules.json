@@ -1072,7 +1072,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Structural vectors cover private delivery, broadcast delivery, missing recipients, null messages, replacement subscriptions, and unsubscribe behavior in Atyria.Server.Tests.",
+      "implementedNote": "Structural vectors cover private delivery, broadcast delivery, missing recipients, null messages, invalid channels, replacement subscriptions, and unsubscribe behavior in Atyria.Server.Tests.",
       "verified": false
     },
     {
