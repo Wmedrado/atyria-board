@@ -205,8 +205,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "Static vertex/index decoding exists, but the spec has no neutral binary contract or golden vectors for CLOD/MRM edge-collapse levels; migration remains partial.",
+      "implemented": true,
+      "implementedNote": "MeshDefinition reads LOD levels with index buffers and edge-collapse records; corpus/oracle bit-exact validation against real .shape files not run.",
       "verified": false
     },
     {
@@ -226,8 +226,8 @@
         "assets.mesh"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "Bone hierarchy/rest positions parse, but rotation, keyframe tracks, interpolation, and the neutral animation contract are still missing.",
+      "implemented": true,
+      "implementedNote": "Skeleton bones preserve rest rotation; animation definitions, per-bone keyframe tracks, monotonic timestamp validation, endpoint sampling, fixed-point position interpolation, and normalized quaternion interpolation pass Atyria.Assets.Tests (43 tests).",
       "verified": false
     },
     {
@@ -266,8 +266,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "Basic shape/name/position/scale parsing exists, but rotation and the documented visibility/collision/lighting flags are not represented.",
+      "implemented": true,
+      "implementedNote": "Placed instances preserve shape/name, fixed-point position and scale, quaternion rotation, visibility, collision, and baked-lighting flags; parser tests pass in Atyria.Assets.Tests (43 tests).",
       "verified": false
     },
     {
