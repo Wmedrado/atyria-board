@@ -61,7 +61,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "EntityId, SlotId, pooled buffer lifecycle, primitive widths, equality, ordering, validation, and indexed access pass in Atyria.Core.Tests.",
       "verified": false
     },
     {
@@ -205,8 +205,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implemented": false,
+      "implementedNote": "Static vertex/index decoding exists, but the spec has no neutral binary contract or golden vectors for CLOD/MRM edge-collapse levels; migration remains partial.",
       "verified": false
     },
     {
@@ -1153,8 +1153,8 @@
         "ui.bindings"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "Open/close/focus lifecycle and z-order exist, but the documented docking and dragging contract is not implemented yet.",
+      "implemented": true,
+      "implementedNote": "hud/windows/ JSON definitions load via HudWindowLoader; UIWindow supports pointer dragging and deterministic docking, while WindowManager handles z-order/focus; 7 UI tests pass.",
       "verified": false
     },
     {
