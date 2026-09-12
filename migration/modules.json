@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "Base mesh and provisional LOD records parse, but the observed MRM contract is versioned, offset-streamed, material-pass/geomorph based, and not yet represented; real .shape corpus vectors are still required.",
+      "implementedNote": "Static vertex/index and provisional LOD records parse, but the spec still lacks a real .shape corpus or oracle vectors for CLOD/MRM ordering and edge-collapse semantics.",
       "verified": false
     },
     {
