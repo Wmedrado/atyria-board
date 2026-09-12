@@ -1257,7 +1257,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "AudioBank opens sound.bnp and decodes the real corpus: 1601/1601 .sound_anim entries (4808 markers) and bagne_audio.primitive (16 sound zones, 291 points, 6 sounds); AudioEngine schedules animation windows and contained spatial zones. Device codec/backend remains pending a non-sentinel sample_bank.",
+      "implementedNote": "AudioBank opens sound.bnp and decodes the real corpus: 1601/1601 .sound_anim entries (4808 markers), bagne_audio.primitive (16 sound zones, 291 points, 6 sounds), and the observed version-7 sample_bank layout (names, rates, counts, PCM16/ADPCM slices). AudioEngine schedules animation windows and contained spatial zones. Device codec/backend remains pending a non-sentinel sample_bank.",
       "verified": false
     },
     {
