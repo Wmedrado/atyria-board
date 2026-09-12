@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "Static vertex/index and provisional LOD records parse, but the spec still lacks a real .shape corpus or oracle vectors for CLOD/MRM ordering and edge-collapse semantics.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix (signature, container version, type version) with a dirty-room golden vector in Atyria.Assets.Tests; MeshDefinition still uses a local synthetic contract for vertices/indices/LOD. Full .shape and MRM body decoding with two real LOD levels remains blocked on oracle corpus capture.",
       "verified": false
     },
     {
