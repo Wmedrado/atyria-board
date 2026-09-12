@@ -970,7 +970,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, fixed-point normalized aggro entries, and fixed-point aggro target scoring with distance, targeter, free-space, and tie rules; AiBehaviorTests pass. Aggro groups and full place selection remain pending.",
+      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, fixed-point normalized aggro entries, fixed-point aggro target scoring, and bounded group propagation with shaped first contribution, coefficient routing, and duplicate suppression; AiBehaviorTests pass. Full place selection remains pending.",
       "verified": false
     },
     {
