@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle, v4 sphere/box and v9 skinned-MRM base prefixes, ObservedSkinnedMrmReader exposes the validated MRM prefix boundary, SkinnedMrmGeometryHeaderReader covers the measured v0 bone/bounds/distance header, MeshMaterialPrefixReader reaches the measured v6 geometry boundary, MeshVertexBufferPrefixReader captures the v4 mesh's version-two buffer prefix, and MeshMultiLodSelector preserves first-covering-slot selection with last-slot upper-bound behavior. Static rectangle geometry is decoded; the remaining v4 payload and MRM body decoding with two real LOD levels remain pending measured corpus data.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle, v4 sphere/box and v9 skinned-MRM base prefixes, ObservedSkinnedMrmReader exposes the validated MRM prefix boundary, SkinnedMrmGeometryHeaderReader covers the measured v0 bone/bounds/distance header, ObservedMrmReader and MrmGeometryHeaderReader cover the measured v5 morph/distance/LOD-wedge header, MeshMaterialPrefixReader reaches the measured v6 geometry boundary, MeshVertexBufferPrefixReader captures the v4 mesh's version-two buffer prefix, and MeshMultiLodSelector preserves first-covering-slot selection with last-slot upper-bound behavior. Static rectangle geometry is decoded; the remaining v4 payload and MRM body decoding with two real LOD levels remain pending measured corpus data.",
       "verified": false
     },
     {
@@ -970,7 +970,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, and fixed-point normalized aggro entries with observed contribution, bounds, and 1/1200-per-tick decay; AiBehaviorTests pass. Aggro groups and full place selection remain pending.",
+      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, fixed-point normalized aggro entries, and fixed-point aggro target scoring with distance, targeter, free-space, and tie rules; AiBehaviorTests pass. Aggro groups and full place selection remain pending.",
       "verified": false
     },
     {
