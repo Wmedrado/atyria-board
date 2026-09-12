@@ -112,7 +112,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CharacterProgression preserves bounded integer attributes and now exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands; full skill-tree, catalyzer, and oracle integration remain pending.",
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -926,7 +926,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "CharacterProgression preserves bounded integer attributes and now exposes the observed 250-level skill XP table with its 5..439, 440..449, and 450-point bands; full skill-tree, catalyzer, and oracle integration remain pending.",
       "verified": false
     },
     {
