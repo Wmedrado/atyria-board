@@ -96,7 +96,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "JobScheduler retains explicit Action draining and adds allocation-avoiding struct IJob dispatch through the thread pool; 32 core tests pass.",
+      "implementedNote": "Guards cover Sim/World determinism, LINQ-free hot paths, full project-reference graph, forbidden cross-layer edges, ship targets without Qa, RenderExtract boundary, and self-checking violation detection.",
       "verified": false
     },
     {
@@ -112,7 +112,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "tools/provenance/shingle.mjs scans staged sources for reference overlap; shingle.test.mjs covers the matcher.",
       "verified": false
     },
     {
@@ -128,7 +128,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "SimSnapshot (9 modules: core/render/world/sim); verify-all.mjs tiers 1–3 + .oracle/verification-report.json; reference-oracle.mjs + 7 frozen captures in content/oracle/reference/; import-reference.mjs for owner drops. Live ATYRIA_REFERENCE_CLIENT harness still pending.",
       "verified": false
     },
     {
@@ -146,7 +146,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "tools/bench/collect.mjs runs client --fps-proof and writes metrics.json; check.mjs gates frame and allocation budgets.",
       "verified": false
     },
     {
@@ -186,7 +186,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "DdsTextureReader decodes headers and payloads; Atyria.Assets.Tests/DdsTextureReaderTest passes against sample data.",
       "verified": false
     },
     {
@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Golden-vector decoders cover observed SHAP/CMesh (rectangle v1, sphere/box v4 vertices, rectangle02 subset/index/AABB tail), MRM v5 body composition, eleven measured LOD bodies with passes/geomorphs/influence/skin subsets, and ordered body-plus-LOD sequence. Ran dotnet test tests/Atyria.Assets.Tests (117). Not exercised: runtime CLOD distance selection, CMeshMultiLod slot picking, or a full characters_shapes.bnp corpus sweep; unobserved skin-weight semantics and remaining shape families stay behind measured captures.",
+      "implementedNote": "Golden-vector decoders cover observed SHAP/CMesh (rectangle v1, sphere/box v4 vertices, rectangle02 subset/index/AABB tail), MRM v5 body composition, eleven measured LOD bodies with passes/geomorphs/influence/skin subsets, and ordered body-plus-LOD sequence. Ran dotnet test tests/Atyria.Assets.Tests (117). Not exercised: runtime CLOD distance selection, CMeshMultiLod slot picking, or a full characters_shapes.bnp corpus sweep. Skin-weight semantics for the CMeshMRM body are now measured (2026-09-12): each 32-byte record is four (int32 bone index, float weight) pairs; tools/SkinProbe decoded all such records in characters_shapes.bnp (6 samples, 6046 records, 0 index outside the bone list, 0 weight out of [0,1], 0 sum outside 1+-0.001) and MrmSkinWeightEntry exposes them. CMeshMRMSkinned LOD bodies and their 8-float skin vertex records remain undecoded, so skinned character meshes still do not compose. tools/SkinProbe --coverage measured 2026-09-12 that only 5 of 2633 shapes across the installed *shapes*.bnp archives load through ObservedShapeMeshReader: the CMeshBase v9 material path is pinned to one sample's SHA and real v9 shapes carry 1..40 materials, and skinned character parts stop at a fixed 0x000006FE vertex-buffer flag check. The polymorphic texture records were then measured against the reference format (record = uint64 node + type name + body; body = two version bytes, five 4-byte enums and a flag) and the skipper no longer pins the enum values: tools/SkinProbe --coverage on 2026-09-12 now measures 936 of 2778 shapes loading (1,189,655 vertices, 2,391,807 indices), up from 6. The 577 remaining skinned-MRM flag failures and the 416/225 type-dispatch failures are the next measured step; the P2/P5 blocker is no longer the material texture walk.",
       "verified": false
     },
     {
@@ -227,7 +227,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Skeleton bones preserve rest rotation; animation definitions, per-bone keyframe tracks, monotonic timestamp validation, endpoint sampling, fixed-point position interpolation, and normalized quaternion interpolation pass Atyria.Assets.Tests (43 tests).",
+      "implementedNote": "Real .skel (CSkeletonShape v1) and .anim (NEL_ANIM v2) decoders. tools/SkeletonProbe parses 82/82 character skeletons and 3174/3174 character animations (228,659 tracks); 208,765 track names resolve to a parsed-skeleton bone; fy_hof_skel bone 0 matches an independent parser bit-for-bit. Sampling covers default, linear and sampled tracks. SkeletonPose composes rest and animated local/skin matrices; tools/PoseProbe evaluates all 82 skeletons (6071 bones), samples 1252 fy_hof clips across 3756 poses, and reports 0 non-finite matrices. Track naming is measured: a track is {bone}.{channel}, with only rotquat and pos seen in 3174 animations; tools/SkeletonProbe --tracks prints them. Synthetic-format unit tests still pass. Rest-pose identity and visual oracle comparison remain pending.",
       "verified": false
     },
     {
@@ -247,7 +247,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "ZoneDefinition and patch readers exist; Atyria.Assets.Tests/ZoneDefinitionTests passes.",
       "verified": false
     },
     {
@@ -287,7 +287,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "CollisionSurfaceData decoder; content/collision/mvp_spawn_arena.bin corpus; CollisionMapContentLoader rasterizes triangles into world grid via CollisionSurfaceMapRasterizer. Atyria.Assets.Tests/CollisionDataTest passes.",
       "verified": false
     },
     {
@@ -307,7 +307,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "PackedSheet and sheet skippers exist; Atyria.Assets.Tests/PackedSheetTest and CreatureSheetSkipperTests pass. Typed weather_function_params, light_cycle, weather_setup, sky and continent weather-function readers decode the core4-client corpus (tools/SkyProbe --corpus, tools/proofs/sky_weather_decode_proof.mjs). Fixed NelStreamMapReader.TryReadEntries which returned payload slices relative to the located map section instead of their file offset.",
       "verified": false
     },
     {
@@ -327,7 +327,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "SpatialPrimitive decoder exists; Atyria.Assets.Tests/SpatialPrimitiveTest passes.",
       "verified": false
     },
     {
@@ -347,7 +347,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "ParticleModel decoder exists; Atyria.Assets.Tests/ParticleModelTest passes.",
       "verified": false
     },
     {
@@ -365,7 +365,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "VulkanInteropProbe bootstraps Vulkan 1.3 and reports command-recording cost; RenderBackend retains the allocation-free command contract.",
       "verified": false
     },
     {
@@ -407,7 +407,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "TerrainPatchStore.QueryVisible feeds RenderFramePipeline terrain draw commands; GPU terrain pass and draw-distance budget still unmeasured.",
       "verified": false
     },
     {
@@ -430,7 +430,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "MeshStore.QueryVisible feeds RenderFramePipeline mesh draw commands; GPU skinning and instancing still pending.",
       "verified": false
     },
     {
@@ -448,7 +448,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "RenderFramePipeline encodes sky/weather as the first clear command; deferred lighting and shadow GPU passes still pending.",
       "verified": false
     },
     {
@@ -470,7 +470,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "ParticleSystem.CopyTo feeds RenderFramePipeline particle draw commands; GPU simulation still pending.",
       "verified": false
     },
     {
@@ -492,7 +492,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "SkyWeatherController implements CPredictWeather season/cycle/wangHash selection from weather_predict.cpp; SkyCycle ticks follow 1800 ticks/hour. ESkyWeather bands feed RenderFramePipeline clear commands. WeatherSetupBlender selects and interpolates the bracketing weather setups (implicit value scaling by setupCount-1), proven by tools/proofs/weather_blend_proof.mjs. GPU atmosphere pass and server DB weather blend still pending.",
       "verified": false
     },
     {
@@ -514,7 +514,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "VegetationStore.QueryVisible feeds RenderFramePipeline vegetation draw commands; GPU instancing still pending.",
       "verified": false
     },
     {
@@ -532,7 +532,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "PostProcessSettings exposure/vignette encode as blit commands when enabled; GTAO/bloom GPU passes still pending.",
       "verified": false
     },
     {
@@ -550,7 +550,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "UpscaleCalculator resolution encodes as a blit command when enabled; TAA/FSR/DLSS integration still pending.",
       "verified": false
     },
     {
@@ -569,7 +569,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "RenderFrameCapture.TryWrite serializes commands; TryComputeHash hashes the byte capture for golden-frame comparison.",
       "verified": false
     },
     {
@@ -590,7 +590,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "WorldCellGrid tracks cell residency; Atyria.World.Tests/WorldCellGridTest passes.",
       "verified": false
     },
     {
@@ -611,7 +611,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "WorldZoneSearch reproduces NeL zone id/name mapping (160 m cells, 675×297 grid). WorldZoneStreamManager mirrors CZoneManager load/evict sequencing (one removal per pass, async load queue, cached required set). MvpWorldContent wires the manager to cell residency and keeps validated .zonel files memory-mapped via ZonelMappedFile until eviction. Not exercised: oracle residency comparison against the full 6.4 GB corpus.",
       "verified": false
     },
     {
@@ -632,7 +632,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "CollisionSurfaceMap + PacsMovementResolver slide projection + CollisionMovementResolver grid walk/slide + CollisionSurfaceMapRasterizer (triangle→cell); spawn arena loaded from content/collision corpus on server. Atyria.World.Tests/CollisionSurfaceMapTest passes. Full PACS edge corpus oracle pending.",
       "verified": false
     },
     {
@@ -653,7 +653,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "SpatialIndex queries by coordinate; Atyria.World.Tests/SpatialIndexTest passes.",
       "verified": false
     },
     {
@@ -672,7 +672,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "ContractCatalog loads manifest and property tables; RouteCodec and replication writers compile in Atyria.Contract.",
       "verified": false
     },
     {
@@ -692,7 +692,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "BitCodec and wire message layouts tested in Atyria.Net.Tests/BitCodecTest and ReplicationWireTest.",
       "verified": false
     },
     {
@@ -713,7 +713,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "UdpTransportEndpoint and session table tested in Atyria.Net.Tests.",
       "verified": false
     },
     {
@@ -734,7 +734,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Replication vectors cover bounded storage, same-value suppression, dirty update collection, slot ordering, and overflow retention.",
+      "implementedNote": "ReplicationTable vectors plus ReplicationInterest (160 m GPMS-cell radius), ReplicationPropertyPriority (position props 21/22 first), and CollectDirtyForSend overflow retention in ShardTickPipeline property deltas.",
       "verified": false
     },
     {
@@ -754,7 +754,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "GameClock advances at configured rate; Atyria.Server.Tests/GameClockTest passes.",
       "verified": false
     },
     {
@@ -797,7 +797,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "EntityRegistry covers unique valid IDs, O(1) dictionary lookup, removal deactivation, clear, count, and invalid/duplicate registration vectors in Atyria.Server.Tests.",
+      "implementedNote": "EntityRegistry covers unique valid IDs, O(1) dictionary lookup, removal deactivation, clear, count, and invalid/duplicate registration vectors in Atyria.Server.Tests. CombatEntityRegistry + CombatEntityState hold per-entity combat stats consumed by ShardCombatService.",
       "verified": false
     },
     {
@@ -820,7 +820,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "PositionReport + GpmsPositionValidator + MovementAuthority; server and ClientMovementPredictor load spawn collision from content/collision/mvp_spawn_arena.bin via CollisionCorpusLoader; ShardTickPipeline applies PACS slide. Oracle sim golden; full PACS mesh corpus pending.",
       "verified": false
     },
     {
@@ -843,7 +843,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CombatResolver retains the scalar health contract and applies measured typed ten-channel protection to defender health with cap-before-reduction ordering; CombatTables expose observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data, while full hit/effect integration and oracle verification remain pending.",
+      "implementedNote": "CombatResolver and CombatPhrasePipeline chain fight-phrase gating, area/brick/PvP/totem modifiers, dodge/parry, NPC range rejection, PowerShielding redirect with bodyguard shield/armor, PowerWaterWall absorption, range bounce on main target, player magic-armor absorption, defender shield-use, dual equipment-protection passes, and critical localisation with EffectStore application. CombatPhraseRequestAssembly + CombatPhraseHealthApplication wire Sabrina/brick gates and HP apply; ShardCombatService on server executes strikes from entity registries. Live reference oracle remains pending.",
       "verified": false
     },
     {
@@ -970,7 +970,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, fixed-point normalized aggro entries, fixed-point aggro target scoring, and bounded group propagation with shaped first contribution, coefficient routing, and duplicate suppression; AiBehaviorTests pass. Full place selection remains pending.",
+      "implementedNote": "AiController perception radius, chase/attack/disengage state machine, deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp, fixed-point normalized aggro entries, fixed-point aggro target scoring, bounded group propagation with shaped first contribution, coefficient routing, and duplicate suppression, plus FaunaPlaceDestinationSelection (64-try octile score with near-bot bias and topology deny flags). AiBehaviorTests pass. Live place corpus oracle remains pending.",
       "verified": false
     },
     {
@@ -1113,7 +1113,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "UIWidget tree and layout tested in Atyria.Ui.Tests/Engine/UIWidgetTests.",
       "verified": false
     },
     {
@@ -1134,7 +1134,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "ObservableProperty bindings tested in Atyria.Ui.Tests/Bindings/ObservablePropertyTests.",
       "verified": false
     },
     {
@@ -1154,7 +1154,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "hud/windows/ JSON definitions load via HudWindowLoader; UIWindow supports pointer dragging and deterministic docking, while WindowManager handles z-order/focus; 7 UI tests pass.",
+      "implementedNote": "hud/windows JSON is re-authored from observation (login 240×26 fields, five vertical 128×20 select slots, in-world chat/target at 1280×720). HudWindowLoader builds widget children and skips boot screens for the in-world HUD. Oracle comparison remains pending.",
       "verified": false
     },
     {
@@ -1196,7 +1196,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "ClientSession lifecycle, ClientMirror property deltas, and ClientHost UDP hello/tick/delta loop compile and pass structural tests in Atyria.Client.Tests; oracle comparison remains pending.",
+      "implementedNote": "ClientSession covers login/select/create/in-world states. Outgame layout is the observed 800×600 (vertical 128×20 slots, login 240×26, Next confirms Play/Create). In-world HUD draws authored chat/target; I/C/M toggle sheets. Zone patches fill the view after admission. QA skip remains a CLI flag, not a widget. Oracle comparison remains pending.",
       "verified": false
     },
     {
@@ -1257,7 +1257,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "AudioBank opens sound.bnp and decodes the real corpus: 1601/1601 .sound_anim entries (4808 markers) and bagne_audio.primitive (16 sound zones, 291 points, 6 sounds); AudioEngine schedules animation windows and contained spatial zones. Device codec/backend remains pending a non-sentinel sample_bank.",
       "verified": false
     },
     {
@@ -1279,7 +1279,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "tools/ContentExtract decodes every .packed_sheets via SheetSkipperRegistry, walks .primitive XML (NeL ligo TYPE/NAME), applies rebrand.toml, writes content/manifest.json with per-file reconciliation. extract.mjs delegates to dotnet. Exercised with --validate against core4-client data (34/34 packed_sheets, 8037 entries). automaton_list skips Type+SheetId prefix then list serial; oracle spot-check of counts remains pending.",
       "verified": false
     },
     {
@@ -1299,7 +1299,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "Code and tests exist in this checkout; behaviour not yet verified against the oracle.",
       "verified": false
     },
     {
@@ -1317,7 +1317,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "Code and tests exist in this checkout; behaviour not yet verified against the oracle.",
       "verified": false
     },
     {
@@ -1336,7 +1336,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "QaController steps GameClock, spawns entities, and snapshots EntityRegistry state; Atyria.Qa.Tests passes structural vectors.",
+      "implementedNote": "QaController + ShardQaBridge HTTP loopback :17421; POST /qa/snapshot/save and /qa/snapshot/restore with QaSnapshotStore + QaSnapshotRestorer; mvp_qa_control_proof.mjs.",
       "verified": false
     },
     {
@@ -1372,7 +1372,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "tools/mcp/bridge.mjs exposes step_ticks, get_clock_info, and get_active_entities over JSON-RPC stdin/stdout per qa.mcp spec.",
+      "implementedNote": "tools/mcp/bridge.mjs JSON-RPC stdio sobre HTTP QA (qa-http.mjs fila); bridge.test.mjs + docs/mvp/AI-QA.md.",
       "verified": false
     }
   ]
