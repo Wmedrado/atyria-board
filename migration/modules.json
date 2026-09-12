@@ -492,7 +492,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "SkyWeatherController implements CPredictWeather season/cycle/wangHash selection from weather_predict.cpp; SkyCycle ticks follow 1800 ticks/hour. ESkyWeather bands feed RenderFramePipeline clear commands. WeatherSetupBlender selects and interpolates the bracketing weather setups (implicit value scaling by setupCount-1), proven by tools/proofs/weather_blend_proof.mjs. GPU atmosphere pass and server DB weather blend still pending.",
+      "implementedNote": "SkyWeatherController resolves the hour to a day/dusk/night level through the light_cycle sheet's per-season boundaries and blends a day/dusk/night palette, the dusk waypoint derived from the declared intervals; the weather side builds a neutral setup from weather_setup and blends a [0,1] value across the season's table, unioning effects by name. RenderFramePipeline's Clear carries the fog colour and the light level of the hour. The earlier invented weather bands (0.25/0.5/0.75) are gone. Proven by tools/proofs/sky_light_cycle_proof.mjs (continent 295, 6 season setups, boundaries, hour-driven colours, Clear payload); WeatherSetupBlender still proven by tools/proofs/weather_blend_proof.mjs. Still pending: sun direction/colour from the continent DirLight setups (no typed reader), the sky bitmap layer, the GPU atmosphere pass, and the server DB weather blend.",
       "verified": false
     },
     {
@@ -1196,7 +1196,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "ClientSession covers login/select/create/in-world states. Outgame layout is the observed 800×600 (vertical 128×20 slots, login 240×26, Next confirms Play/Create). In-world HUD draws authored chat/target; I/C/M toggle sheets. Zone patches fill the view after admission. QA skip remains a CLI flag, not a widget. Oracle comparison remains pending.",
+      "implementedNote": "ClientSession covers login/select/create/in-world states. Outgame layout is the observed 800×600 (vertical 128×20 slots, login 240×26, Next confirms Play/Create). In-world HUD draws authored chat/target; I/C/M toggle sheets. Zone patches fill the view after admission. Replicated motion is smoothed against a smoothed server clock (ServerTickSmoother/PositionSmoother) with per-entity animation transitions and collision-resolved reconciliation; the window loop now feeds authoritative samples and advances presentation smoothing in online play, proven by tools/proofs/client_session_smoothing_proof.mjs. QA skip remains a CLI flag, not a widget. Oracle comparison remains pending.",
       "verified": false
     },
     {
