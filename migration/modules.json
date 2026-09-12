@@ -863,7 +863,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Bounded effect replacement/stack identity, tick-based expiry, slot-order span collection, capacity, and invalid-input behavior pass in Atyria.Sim.Tests.",
+      "implementedNote": "Bounded effect replacement/stack identity, explicit pair removal, tick-based expiry, slot-order span collection, capacity, and invalid-input behavior pass in Atyria.Sim.Tests.",
       "verified": false
     },
     {
