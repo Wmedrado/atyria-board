@@ -205,8 +205,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": true,
-      "implementedNote": "MeshDefinition reads LOD levels with index buffers and edge-collapse records; corpus/oracle bit-exact validation against real .shape files not run.",
+      "implemented": false,
+      "implementedNote": "Static vertex/index and provisional LOD records parse, but the spec still lacks a real .shape corpus or oracle vectors for CLOD/MRM ordering and edge-collapse semantics.",
       "verified": false
     },
     {
