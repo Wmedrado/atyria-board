@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; mesh and material readers cover measured rectangle, sphere/box and skinned-MRM prefixes; MRM geometry v5, LOD offset tables, render passes, geomorphs, influence lists, skin blocks, skin subsets, complete observed LOD bodies, and ordered LOD sequence composition are covered by golden vectors. Static rectangle geometry is decoded; remaining v4 vertex payload and unobserved skin semantics remain pending measured corpus data.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; mesh and material readers cover measured rectangle, sphere/box and skinned-MRM prefixes; MRM geometry v5, LOD offset tables, render passes, geomorphs, influence lists, skin blocks, skin subsets, complete observed LOD bodies, ordered LOD sequence composition, and the measured v4 sphere vertex records are covered by golden vectors. Static rectangle geometry is decoded; remaining v4 indices/matrix blocks and unobserved skin semantics remain pending measured corpus data.",
       "verified": false
     },
     {
