@@ -843,7 +843,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CombatResolver retains the scalar health contract and now exposes typed ten-channel protection with cap-before-reduction ordering; CombatTables expose observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data, while full hit/effect integration and oracle verification remain pending.",
+      "implementedNote": "CombatResolver retains the scalar health contract and applies measured typed ten-channel protection to defender health with cap-before-reduction ordering; CombatTables expose observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data, while full hit/effect integration and oracle verification remain pending.",
       "verified": false
     },
     {
