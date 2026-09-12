@@ -970,7 +970,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "AiController perception radius, chase/attack/disengage state machine; AiBehaviorTests pass. Group spawn cycles not yet implemented.",
+      "implementedNote": "AiController perception radius, chase/attack/disengage state machine and deterministic fauna spawning/grazing/resting cycle with one-bot-per-update population ramp; AiBehaviorTests pass. Aggro groups and full place selection remain pending.",
       "verified": false
     },
     {
