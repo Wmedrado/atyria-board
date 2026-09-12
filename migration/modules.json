@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix (signature, container version, type version) with a dirty-room golden vector in Atyria.Assets.Tests; MeshDefinition still uses a local synthetic contract for vertices/indices/LOD. Full .shape and MRM body decoding with two real LOD levels remains blocked on oracle corpus capture.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix, and MeshBasePrefixReader now covers the real CMeshBase v1 rectangle prefix plus the v4 sphere/box prefix with dirty-room vectors in Atyria.Assets.Tests. Static rectangle geometry is decoded; MeshDefinition remains synthetic and full material, .shape, and MRM body decoding with two real LOD levels remains pending measured corpus data.",
       "verified": false
     },
     {
