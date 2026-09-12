@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle, v4 sphere/box and v9 skinned-MRM base prefixes, ObservedSkinnedMrmReader exposes the validated MRM prefix boundary, MeshMaterialPrefixReader reaches the measured v6 geometry boundary, MeshVertexBufferPrefixReader captures the v4 mesh's version-two buffer prefix, and MeshMultiLodSelector preserves first-covering-slot selection with last-slot upper-bound behavior. Static rectangle geometry is decoded; the remaining v4 payload and MRM body decoding with two real LOD levels remain pending measured corpus data.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle, v4 sphere/box and v9 skinned-MRM base prefixes, ObservedSkinnedMrmReader exposes the validated MRM prefix boundary, SkinnedMrmGeometryHeaderReader covers the measured v0 bone/bounds/distance header, MeshMaterialPrefixReader reaches the measured v6 geometry boundary, MeshVertexBufferPrefixReader captures the v4 mesh's version-two buffer prefix, and MeshMultiLodSelector preserves first-covering-slot selection with last-slot upper-bound behavior. Static rectangle geometry is decoded; the remaining v4 payload and MRM body decoding with two real LOD levels remain pending measured corpus data.",
       "verified": false
     },
     {
