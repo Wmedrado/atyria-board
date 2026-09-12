@@ -843,7 +843,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CombatResolver applies power-minus-armor damage with health clamp; CombatResolverTest passes. Hit tables and content multipliers remain structural placeholders.",
+      "implementedNote": "CombatResolver applies the documented scalar power-minus-armor structural contract. Dirty-room analysis records legacy per-damage-type protection factor/max/effect reduction semantics; the model lacks those inputs and remains unverified.",
       "verified": false
     },
     {
