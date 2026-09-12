@@ -1,0 +1,1107 @@
+{
+  "version": 1,
+  "scales": {
+    "effort": "1 tiny, 2 small, 3 medium, 4 large, 5 very large. Derived from reference lines, then adjusted where the reference is bloated or unusually dense.",
+    "risk": "1 routine, 2 some unknowns, 3 exactness or fidelity matters, 4 hard to verify or heavily unknown, 5 could invalidate the plan.",
+    "difficulty": "effort x risk. Bands: 1-4 green, 5-9 yellow, 10-14 orange, 15-25 red.",
+    "progress": "ported = the code exists and compiles. verified = it is checked against the oracle or a real corpus. Ported without verified is not done."
+  },
+  "phases": {
+    "0": "Foundations",
+    "1": "Read the world",
+    "2": "Show the world",
+    "3": "Contract and transport",
+    "4": "Rules",
+    "5": "HUD",
+    "6": "Content and breadth"
+  },
+  "modules": [
+    {
+      "id": "core.fixed",
+      "project": "Atyria.Core",
+      "name": "Fixed-point math",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 4,
+      "why": "Determinism rests on it. A subtle rounding difference diverges every replay, and the symptom appears far from the cause.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "core.rng",
+      "project": "Atyria.Core",
+      "name": "Seeded RNG",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 1,
+      "risk": 3,
+      "why": "Must be reproducible across platforms and stable forever: changing the sequence invalidates every stored replay.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "core.ids",
+      "project": "Atyria.Core",
+      "name": "Ids, handles, pooling",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 2,
+      "why": "Shapes the allocation behaviour of everything above it, so getting it wrong is expensive to undo.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "tests.arch",
+      "project": "Atyria.Architecture.Tests",
+      "name": "Invariant guards",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 2,
+      "why": "Cheap, and it is what keeps the other invariants real. Each guard must be seen to fail.",
+      "needs": [
+        "core.fixed",
+        "core.rng"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "tools.provenance",
+      "project": "tools/provenance",
+      "name": "Clean-room checking",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 3,
+      "why": "Protects the premise of the whole project, and a clean result proves less than people assume.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "tools.oracle",
+      "project": "tools/oracle",
+      "name": "Oracle harness",
+      "phase": 0,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 3,
+      "why": "Every fidelity claim in phase 4 depends on it. Partly exists already as the playtest harness.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.archive",
+      "project": "Atyria.Assets",
+      "name": "Archive container",
+      "phase": 1,
+      "reference": [
+        "nel/src/misc/big_file.cpp"
+      ],
+      "refLines": 900,
+      "effort": 1,
+      "risk": 1,
+      "why": "Format is trivial and already decoded once: 253 archives, 63,117 entries, zero failures.",
+      "needs": [
+        "core.ids"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.texture",
+      "project": "Atyria.Assets",
+      "name": "Textures",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (bitmap, dds, tga)"
+      ],
+      "refLines": 8000,
+      "effort": 2,
+      "risk": 2,
+      "why": "27,370 files, 3.76 GB. Volume rather than subtlety, but a wrong decode is silent.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.mesh",
+      "project": "Atyria.Assets",
+      "name": "Meshes and CLOD",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (mesh, mesh_mrm, clod)"
+      ],
+      "refLines": 30000,
+      "effort": 4,
+      "risk": 4,
+      "why": "3,607 meshes with progressive level of detail. Bit-exact or nothing loads, and the failure surfaces in a log rather than on screen.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.skeleton",
+      "project": "Atyria.Assets",
+      "name": "Skeletons and animation",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (skeleton, animation, track)"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 4,
+      "why": "203 skeletons, 4,676 animations. Interpolation and track semantics have to match or everything moves wrongly.",
+      "needs": [
+        "assets.archive",
+        "assets.mesh"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.zone",
+      "project": "Atyria.Assets",
+      "name": "Terrain zones",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (zone, landscape, tile bank)"
+      ],
+      "refLines": 35000,
+      "effort": 4,
+      "risk": 4,
+      "why": "7,561 zones, 1.49 GB, patch-based with tile banks. The densest format in the set.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.ig",
+      "project": "Atyria.Assets",
+      "name": "Instance groups",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (instance_group)"
+      ],
+      "refLines": 3000,
+      "effort": 1,
+      "risk": 1,
+      "why": "Already inspected: name, shape, transform, repeated. 5,148 files, about 51 instances per cell.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.collision",
+      "project": "Atyria.Assets",
+      "name": "Collision data",
+      "phase": 1,
+      "reference": [
+        "nel/src/pacs (retriever, surface)"
+      ],
+      "refLines": 6000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Feeds movement feel. A misread surface is felt rather than reported.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.sheet",
+      "project": "Atyria.Assets",
+      "name": "Sheet format",
+      "phase": 1,
+      "reference": [
+        "nel/src/georges"
+      ],
+      "refLines": 5986,
+      "effort": 3,
+      "risk": 4,
+      "why": "34 packed sheets carry items, bricks, phrases, creatures and the skill tree. One wrong offset corrupts the whole content set.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.primitive",
+      "project": "Atyria.Assets",
+      "name": "Primitives",
+      "phase": 1,
+      "reference": [
+        "nel/src/ligo"
+      ],
+      "refLines": 7539,
+      "effort": 2,
+      "risk": 3,
+      "why": "The populated world: spawns, NPCs, mission anchors. Licence of the data itself is unresolved.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "assets.particle",
+      "project": "Atyria.Assets",
+      "name": "Particle systems",
+      "phase": 1,
+      "reference": [
+        "nel/src/3d (ps_*)"
+      ],
+      "refLines": 25000,
+      "effort": 3,
+      "risk": 2,
+      "why": "870 systems. Large surface, but a wrong one is visible immediately rather than silently.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.backend",
+      "project": "Atyria.Render",
+      "name": "Graphics backend",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 4,
+      "risk": 5,
+      "why": "C# hands you no GPU abstraction, so this is written here. Choosing C# made this larger, and it is the single decision that could invalidate the plan.",
+      "needs": [
+        "core.ids"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.terrain",
+      "project": "Atyria.Render",
+      "name": "Terrain rendering",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d/landscape*"
+      ],
+      "refLines": 40000,
+      "effort": 5,
+      "risk": 5,
+      "why": "Whether this holds the reference's draw distance and frame time is UNMEASURED. First risk to retire.",
+      "needs": [
+        "render.backend",
+        "assets.zone",
+        "world.stream"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.mesh",
+      "project": "Atyria.Render",
+      "name": "Mesh and skinning",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d (mesh instance, skin)"
+      ],
+      "refLines": 25000,
+      "effort": 4,
+      "risk": 3,
+      "why": "Well-understood problem, large surface. Instancing decides whether crowds are affordable.",
+      "needs": [
+        "render.backend",
+        "assets.mesh",
+        "assets.skeleton"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.particles",
+      "project": "Atyria.Render",
+      "name": "Particle rendering",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d/particle_system*"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 2,
+      "why": "Visual, self-evident when wrong.",
+      "needs": [
+        "render.backend",
+        "assets.particle"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.sky",
+      "project": "Atyria.Render",
+      "name": "Sky, weather, day and night",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d (cloud, sky)",
+        "ryzom/client/src (weather, sky)"
+      ],
+      "refLines": 12000,
+      "effort": 3,
+      "risk": 2,
+      "why": "Strongly shapes how the world reads, but a mistake is cosmetic.",
+      "needs": [
+        "render.backend"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.vegetation",
+      "project": "Atyria.Render",
+      "name": "Vegetation",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d/vegetable*"
+      ],
+      "refLines": 10000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Density is a frame-time problem as much as a visual one.",
+      "needs": [
+        "render.backend",
+        "world.stream"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "render.capture",
+      "project": "Atyria.Render",
+      "name": "Deterministic capture",
+      "phase": 2,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 2,
+      "why": "Golden-frame testing depends on it being genuinely deterministic, not approximately.",
+      "needs": [
+        "render.backend"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "world.grid",
+      "project": "Atyria.World",
+      "name": "Cell grid and residency",
+      "phase": 2,
+      "reference": [
+        "ryzom/client/src (continent)"
+      ],
+      "refLines": 3248,
+      "effort": 2,
+      "risk": 2,
+      "why": "Naming and neighbourhood are simple; getting eviction wrong shows up as thrash.",
+      "needs": [
+        "assets.zone",
+        "assets.ig"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "world.stream",
+      "project": "Atyria.World",
+      "name": "Streaming and budget",
+      "phase": 2,
+      "reference": [
+        "nel/src/3d/landscape (zone manager)"
+      ],
+      "refLines": 15000,
+      "effort": 4,
+      "risk": 5,
+      "why": "Where the GC argument is won or lost. Must not allocate in the hot path, and 6.4 GB must stay off the managed heap.",
+      "needs": [
+        "world.grid",
+        "core.ids"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "world.collision",
+      "project": "Atyria.World",
+      "name": "Collision and movement surface",
+      "phase": 2,
+      "reference": [
+        "nel/src/pacs"
+      ],
+      "refLines": 14137,
+      "effort": 4,
+      "risk": 5,
+      "why": "This IS game feel. Sliding along a wall and stepping over a lip decide whether movement feels right, and approximation is noticed immediately.",
+      "needs": [
+        "assets.collision",
+        "core.fixed"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "world.spatial",
+      "project": "Atyria.World",
+      "name": "Spatial index",
+      "phase": 2,
+      "reference": [
+        "ryzom/server/src/gpm_service"
+      ],
+      "refLines": 11916,
+      "effort": 3,
+      "risk": 3,
+      "why": "Shared by client and server. If the two disagree, players fall through the world.",
+      "needs": [
+        "core.fixed",
+        "world.grid"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "contract.compiler",
+      "project": "tools/contract",
+      "name": "Wire schema compiler",
+      "phase": 3,
+      "reference": [
+        "ryzom/common/data_common/database.xml",
+        "ryzom/common/data_common/msg.xml"
+      ],
+      "refLines": 1590,
+      "effort": 2,
+      "risk": 3,
+      "why": "474 properties and 335 impulses. A previous attempt assumed flat message ids and was wrong: addressing is a route through the tree.",
+      "needs": [],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "net.codec",
+      "project": "Atyria.Net",
+      "name": "Bit-packed codec",
+      "phase": 3,
+      "reference": [
+        "ryzom/common/src/game_share (action, bit stream)"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 4,
+      "why": "Bit widths come from sibling counts, so adding an entry re-encodes a branch. Silent corruption if wrong.",
+      "needs": [
+        "contract.compiler"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "net.transport",
+      "project": "Atyria.Net",
+      "name": "Transport and sessions",
+      "phase": 3,
+      "reference": [
+        "nel/src/net",
+        "ryzom/server/src/frontend_service"
+      ],
+      "refLines": 30000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Transport choice is still open. QUIC would also open a browser path later.",
+      "needs": [
+        "net.codec"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "net.replication",
+      "project": "Atyria.Net",
+      "name": "Property replication",
+      "phase": 3,
+      "reference": [
+        "ryzom/server/src/frontend_service"
+      ],
+      "refLines": 23233,
+      "effort": 4,
+      "risk": 4,
+      "why": "Interest scoping and per-client bandwidth priority decide whether a crowded scene feels right.",
+      "needs": [
+        "net.codec",
+        "world.spatial"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "server.tick",
+      "project": "Atyria.Server",
+      "name": "Authoritative tick",
+      "phase": 3,
+      "reference": [
+        "ryzom/server/src/tick_service"
+      ],
+      "refLines": 2468,
+      "effort": 1,
+      "risk": 3,
+      "why": "10 Hz is a fidelity constraint: gameplay timing is expressed in ticks, so changing the rate rescales the whole game.",
+      "needs": [
+        "core.fixed"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "server.session",
+      "project": "Atyria.Server",
+      "name": "Session and admission",
+      "phase": 3,
+      "reference": [
+        "nelns/login_system",
+        "ryzom/server/src/ryzom_welcome_service"
+      ],
+      "refLines": 12000,
+      "effort": 3,
+      "risk": 2,
+      "why": "Well-understood territory, and the one place the existing web-API patterns apply in full.",
+      "needs": [
+        "net.transport"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "server.entities",
+      "project": "Atyria.Server",
+      "name": "Entity registry",
+      "phase": 3,
+      "reference": [
+        "ryzom/server/src/gpm_service",
+        "ryzom/server/src/entities_game_service"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Lifecycle and visibility. Allocation behaviour here is felt at every tick.",
+      "needs": [
+        "world.spatial",
+        "server.tick"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.movement",
+      "project": "Atyria.Sim",
+      "name": "Movement and modes",
+      "phase": 4,
+      "reference": [
+        "ryzom/client/src/motion",
+        "nel/src/pacs"
+      ],
+      "refLines": 17000,
+      "effort": 3,
+      "risk": 5,
+      "why": "Game feel, and the first thing a player judges. Fixed-point and collision have to agree exactly.",
+      "needs": [
+        "world.collision",
+        "core.fixed",
+        "server.tick"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.combat",
+      "project": "Atyria.Sim",
+      "name": "Combat resolution",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/phrase_manager"
+      ],
+      "refLines": 45000,
+      "effort": 5,
+      "risk": 5,
+      "why": "The most fidelity-critical code in the project. Hit tables and effect ordering cannot be re-derived by reasoning, only matched against the oracle. Note: sabrina is the DEAD copy.",
+      "needs": [
+        "core.fixed",
+        "core.rng",
+        "server.tick",
+        "content.extract"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.effects",
+      "project": "Atyria.Sim",
+      "name": "Persistent effects",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/phrase_manager (effects)"
+      ],
+      "refLines": 20000,
+      "effort": 4,
+      "risk": 4,
+      "why": "One file per effect in the reference. Stacking and ordering are behaviour.",
+      "needs": [
+        "sim.combat"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.magic",
+      "project": "Atyria.Sim",
+      "name": "Magic resolution",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/phrase_manager (magic)"
+      ],
+      "refLines": 15000,
+      "effort": 4,
+      "risk": 4,
+      "why": "Cast, resist, apply. Same exactness bar as combat.",
+      "needs": [
+        "sim.combat",
+        "sim.effects"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.craft",
+      "project": "Atyria.Sim",
+      "name": "Craft and harvest",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/phrase_manager (craft, forage)"
+      ],
+      "refLines": 15000,
+      "effort": 4,
+      "risk": 4,
+      "why": "Foraging is a signature system and its success curves are tuned, not derivable.",
+      "needs": [
+        "sim.combat",
+        "content.extract"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.character",
+      "project": "Atyria.Sim",
+      "name": "Character, stats, progression",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/player_manager"
+      ],
+      "refLines": 60000,
+      "effort": 5,
+      "risk": 4,
+      "why": "character.cpp alone is 21,550 lines and character.h is included by 188 files. Large, coupled, and full of tuned numbers.",
+      "needs": [
+        "content.extract",
+        "core.fixed"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.inventory",
+      "project": "Atyria.Sim",
+      "name": "Inventory and equipment",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/game_item_manager"
+      ],
+      "refLines": 25000,
+      "effort": 4,
+      "risk": 3,
+      "why": "Weight, bulk and slot rules are mechanical but numerous.",
+      "needs": [
+        "sim.character",
+        "content.extract"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.ai",
+      "project": "Atyria.Sim",
+      "name": "Mob behaviour",
+      "phase": 4,
+      "reference": [
+        "ryzom/server/src/ai_service",
+        "ryzom/server/src/ai_share"
+      ],
+      "refLines": 115000,
+      "effort": 5,
+      "risk": 4,
+      "why": "Aggro, groups and spawn cycles. Most behaviour is group-level, not per-creature, and it is judged by feel over time.",
+      "needs": [
+        "sim.movement",
+        "server.entities",
+        "assets.primitive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.mission",
+      "project": "Atyria.Sim",
+      "name": "Missions",
+      "phase": 4,
+      "reference": [
+        "entities_game_service/mission_manager"
+      ],
+      "refLines": 40000,
+      "effort": 4,
+      "risk": 3,
+      "why": "Large but mostly declarative once primitives are extracted.",
+      "needs": [
+        "assets.primitive",
+        "sim.character"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.guild",
+      "project": "Atyria.Sim",
+      "name": "Guilds and factions",
+      "phase": 4,
+      "reference": [
+        "entities_game_service (guild, faction)"
+      ],
+      "refLines": 25000,
+      "effort": 3,
+      "risk": 2,
+      "why": "Social systems: broad, shallow, low exactness bar.",
+      "needs": [
+        "sim.character"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.outpost",
+      "project": "Atyria.Sim",
+      "name": "Outposts",
+      "phase": 4,
+      "reference": [
+        "entities_game_service (outpost)"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Self-contained gameplay with its own timing rules.",
+      "needs": [
+        "sim.guild",
+        "sim.combat"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "sim.economy",
+      "project": "Atyria.Sim",
+      "name": "Trade and economy",
+      "phase": 4,
+      "reference": [
+        "entities_game_service (trade, market)"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 3,
+      "why": "Exploitable if wrong, so it needs care disproportionate to its size.",
+      "needs": [
+        "sim.inventory"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "server.chat",
+      "project": "Atyria.Server",
+      "name": "Chat and server text",
+      "phase": 4,
+      "reference": [
+        "ryzom/server/src/input_output_service"
+      ],
+      "refLines": 14969,
+      "effort": 3,
+      "risk": 2,
+      "why": "Routing plus localisation of server-sent player text.",
+      "needs": [
+        "net.transport"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "server.persistence",
+      "project": "Atyria.Server",
+      "name": "Persistence",
+      "phase": 4,
+      "reference": [
+        "ryzom/server/src/pd_lib",
+        "persistant_data_service"
+      ],
+      "refLines": 25000,
+      "effort": 3,
+      "risk": 3,
+      "why": "The reference has a bespoke engine; a database replaces it. Migration correctness matters more than speed.",
+      "needs": [
+        "sim.character"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "ui.engine",
+      "project": "Atyria.Ui",
+      "name": "Widget engine",
+      "phase": 5,
+      "reference": [
+        "nel/src/gui"
+      ],
+      "refLines": 75037,
+      "effort": 5,
+      "risk": 3,
+      "why": "Layout, event routing, text and bindings. Large, but a well-understood problem.",
+      "needs": [
+        "render.backend"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "ui.bindings",
+      "project": "Atyria.Ui",
+      "name": "Property bindings",
+      "phase": 5,
+      "reference": [
+        "ryzom/client/src/interface_v3"
+      ],
+      "refLines": 20000,
+      "effort": 3,
+      "risk": 3,
+      "why": "The link between the property tree and the HUD. If a value is missing, the work is a contract change.",
+      "needs": [
+        "ui.engine",
+        "contract.compiler"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "ui.windows",
+      "project": "hud/",
+      "name": "HUD definitions",
+      "phase": 5,
+      "reference": [
+        "interfaces_v3 (53,150 lines of markup and script)"
+      ],
+      "refLines": 53150,
+      "effort": 5,
+      "risk": 3,
+      "why": "RE-AUTHORED window by window from observation, never converted: transforming their markup carries its expression. Paid across features rather than upfront.",
+      "needs": [
+        "ui.bindings"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "ui.handlers",
+      "project": "Atyria.Ui",
+      "name": "Action handlers",
+      "phase": 5,
+      "reference": [
+        "interface_v3/action_handler_*"
+      ],
+      "refLines": 40000,
+      "effort": 4,
+      "risk": 2,
+      "why": "The verbs the HUD invokes. Numerous and individually simple.",
+      "needs": [
+        "ui.bindings"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "client.core",
+      "project": "Atyria.Client",
+      "name": "Client core and session",
+      "phase": 5,
+      "reference": [
+        "ryzom/client/src/*"
+      ],
+      "refLines": 136356,
+      "effort": 5,
+      "risk": 3,
+      "why": "Boot, session, entity view, camera, prediction. Broad rather than deep.",
+      "needs": [
+        "net.transport",
+        "world.stream",
+        "render.mesh"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "client.entities",
+      "project": "Atyria.Client",
+      "name": "Visual entities and animation state",
+      "phase": 5,
+      "reference": [
+        "ryzom/client/src (entity, animation)"
+      ],
+      "refLines": 30000,
+      "effort": 4,
+      "risk": 3,
+      "why": "Appearance composition and animation blending. Visible immediately when wrong.",
+      "needs": [
+        "client.core",
+        "render.mesh",
+        "assets.skeleton"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "audio.engine",
+      "project": "Atyria.Audio",
+      "name": "Sound",
+      "phase": 5,
+      "reference": [
+        "nel/src/sound"
+      ],
+      "refLines": 31154,
+      "effort": 3,
+      "risk": 2,
+      "why": "Mature libraries exist; only the bank and sound-animation formats need decoding.",
+      "needs": [
+        "assets.archive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "content.extract",
+      "project": "tools/extract",
+      "name": "Content extraction",
+      "phase": 1,
+      "reference": [
+        "34 packed sheets",
+        "38 primitives"
+      ],
+      "refLines": 0,
+      "effort": 4,
+      "risk": 3,
+      "why": "Fails quietly: a run that drops a category looks exactly like one that worked. Counts must reconcile on both sides.",
+      "needs": [
+        "assets.sheet",
+        "assets.primitive"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "content.rebrand",
+      "project": "content/rebrand.toml",
+      "name": "Rebrand mapping",
+      "phase": 1,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 4,
+      "why": "The brand seam. An unmapped term must fail extraction rather than travel downstream into a shipped build.",
+      "needs": [
+        "content.extract"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "qa.control",
+      "project": "Atyria.Qa",
+      "name": "Control plane",
+      "phase": 6,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 3,
+      "why": "Time control, state queries, snapshots, injection. Must be compiled out of release builds, not merely disabled.",
+      "needs": [
+        "server.tick",
+        "server.entities"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "qa.scenarios",
+      "project": "Atyria.Qa",
+      "name": "Scenario runner",
+      "phase": 6,
+      "reference": [],
+      "refLines": 0,
+      "effort": 3,
+      "risk": 2,
+      "why": "Turns a seed plus an input sequence into a complete, replayable bug report.",
+      "needs": [
+        "qa.control"
+      ],
+      "ported": false,
+      "verified": false
+    },
+    {
+      "id": "qa.mcp",
+      "project": "tools/mcp",
+      "name": "MCP bridge",
+      "phase": 6,
+      "reference": [],
+      "refLines": 0,
+      "effort": 2,
+      "risk": 1,
+      "why": "The thin part. A transport over capability that already exists.",
+      "needs": [
+        "qa.control"
+      ],
+      "ported": false,
+      "verified": false
+    }
+  ]
+}

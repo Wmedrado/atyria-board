@@ -1,0 +1,313 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atyria migration board</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0f1115; --panel: #161a21; --line: #262c36;
+    --ink: #e6e9ef; --dim: #8d96a5; --faint: #5b6472;
+    --green: #3fb950; --yellow: #d6a521; --orange: #db7d27; --red: #e5534b;
+    --accent: #4c8dff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 0 16px 64px;
+  }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+  header { padding-block: 28px 20px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 4px; font-size: 20px; letter-spacing: -0.01em; }
+  .sub { color: var(--dim); font-size: 13px; }
+
+  .bars { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 18px; }
+  .bar { flex: 1 1 260px; min-width: 240px; }
+  .bar-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--dim); margin-bottom: 6px; }
+  .bar-head b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .track { height: 7px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .fill { height: 100%; width: 0; border-radius: 4px; transition: width .3s ease; }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 20px 0 14px; }
+  button, select {
+    background: var(--panel); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 6px; padding: 6px 11px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+  button:hover, select:hover { border-color: var(--faint); }
+  button.on { border-color: var(--accent); color: var(--accent); }
+  .spacer { flex: 1; }
+  .pending { color: var(--yellow); font-size: 13px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); font-weight: 600;
+       position: sticky; top: 0; background: var(--bg); z-index: 1; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.mid, th.mid { text-align: center; }
+  tr:hover td { background: #12161d; }
+  tr.ready td:first-child { box-shadow: inset 2px 0 0 var(--accent); }
+  tr.ready .name::after { content: ' ready'; color: var(--accent); font-weight: 400; font-size: 11px;
+                          text-transform: uppercase; letter-spacing: .06em; margin-left: 6px; }
+  .name { font-weight: 600; }
+  .proj { color: var(--dim); font-size: 12px; font-family: ui-monospace, monospace; }
+  .why { color: var(--dim); font-size: 12.5px; max-width: 46ch; }
+  .refs { color: var(--faint); font-size: 11.5px; font-family: ui-monospace, monospace; max-width: 30ch; }
+  .phase-row td { background: #12161d; font-weight: 600; font-size: 12px;
+                  text-transform: uppercase; letter-spacing: .06em; color: var(--dim); }
+
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+  .g { background: var(--green) } .y { background: var(--yellow) }
+  .o { background: var(--orange) } .r { background: var(--red) }
+
+  .check { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--line);
+           background: transparent; cursor: pointer; display: inline-grid; place-items: center;
+           color: transparent; font-size: 13px; line-height: 1; padding: 0; }
+  .check.done { background: var(--green); border-color: var(--green); color: #08130a; }
+  .check.local { border-color: var(--yellow); border-style: dashed; color: var(--yellow); }
+  .check.locked { cursor: not-allowed; opacity: .45; }
+
+  .note { margin-top: 28px; padding: 14px 16px; border: 1px solid var(--line);
+          border-radius: 8px; background: var(--panel); color: var(--dim); font-size: 13px; }
+  .note b { color: var(--ink); }
+  .err { color: var(--red); padding: 24px 0; }
+  @media (max-width: 900px) { .why, .refs { display: none } }
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Atyria migration board</h1>
+  <div class="sub">
+    Every module we have to write, mapped to the reference code it replaces.
+    <b>Ported</b> means the code exists and compiles. <b>Verified</b> means someone checked it.
+    Only verified counts.
+  </div>
+  <div class="bars">
+    <div class="bar">
+      <div class="bar-head"><span>Ported</span><b id="pv">0 / 0</b></div>
+      <div class="track"><div class="fill" id="pf" style="background:var(--accent)"></div></div>
+    </div>
+    <div class="bar">
+      <div class="bar-head"><span>Verified</span><b id="vv">0 / 0</b></div>
+      <div class="track"><div class="fill" id="vf" style="background:var(--green)"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <select id="phase"><option value="">All phases</option></select>
+  <select id="order">
+    <option value="order">Implementation order</option>
+    <option value="phase">Group by phase</option>
+  </select>
+  <select id="band">
+    <option value="">All difficulty</option>
+    <option value="r">Critical only</option>
+    <option value="o">Hard and above</option>
+  </select>
+  <button data-f="" class="on">All</button>
+  <button data-f="todo">Not started</button>
+  <button data-f="ported">Ported, unverified</button>
+  <button data-f="ready">Ready now</button>
+  <button data-f="done">Verified</button>
+  <span class="spacer"></span>
+  <span class="pending" id="pending"></span>
+  <button id="export">Copy updated modules.json</button>
+  <button id="reset">Discard my changes</button>
+</div>
+
+<div id="out"></div>
+
+<div class="note">
+  <b>Who marks what.</b> An agent sets <b>ported</b> by committing to
+  <code>docs/migration/modules.json</code>: it knows whether its code compiles.
+  <b>Verified</b> is yours to click, because a tool certifying its own work is not
+  verification. Your clicks are held in this browser and shown with a dashed outline until
+  you press <b>Copy updated modules.json</b> and commit the result, which is what makes them
+  real for everyone else.
+</div>
+</div>
+
+<script>
+const SOURCE = 'migration/modules.json';
+const STORE = 'atyria.board.local.v1';
+
+const band = d => d <= 4 ? 'g' : d <= 9 ? 'y' : d <= 14 ? 'o' : 'r';
+const n = x => x.toLocaleString('en-US');
+
+let data = null;
+let local = {};
+let filter = '';
+let waveOf = new Map();
+
+/**
+ * Implementation order from the dependency graph. A module is ready when everything it
+ * needs is done, so foundations come first by construction rather than by someone
+ * remembering to put them there. Ties break hardest-first: if two are equally ready,
+ * attempt the one that can still invalidate the plan.
+ */
+function computeWaves(mods) {
+  const byId = new Map(mods.map(m => [m.id, m]));
+  const left = new Set(mods.map(m => m.id));
+  const placed = new Set();
+  const waves = [];
+  while (left.size) {
+    const ready = [...left].filter(id => byId.get(id).needs.every(d => placed.has(d)));
+    if (!ready.length) break;  // a cycle; the generator refuses to build in that case
+    ready.sort((a, b) => byId.get(b).difficulty - byId.get(a).difficulty);
+    waves.push(ready);
+    ready.forEach(id => { placed.add(id); left.delete(id); });
+  }
+  waves.forEach((wave, i) => wave.forEach(id => waveOf.set(id, i + 1)));
+  return waves;
+}
+
+/** What is unblocked right now: not done, and everything it needs IS done. */
+const isReady = (m) => !state(m, 'ported') && m.needs.every(d => {
+  const dep = data.modules.find(x => x.id === d);
+  return dep && state(dep, 'verified');
+});
+
+try { local = JSON.parse(localStorage.getItem(STORE) || '{}'); } catch { local = {}; }
+
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(local)); } catch {} };
+
+// The committed value, unless this browser holds an uncommitted click on top of it.
+const state = (m, key) => (local[m.id] && key in local[m.id]) ? local[m.id][key] : m[key];
+const isLocal = (m, key) => !!(local[m.id] && key in local[m.id] && local[m.id][key] !== m[key]);
+
+function toggle(id, key) {
+  const m = data.modules.find(x => x.id === id);
+  const now = !state(m, key);
+  // Verifying something that was never ported would be a claim about nothing.
+  if (key === 'verified' && now && !state(m, 'ported')) {
+    alert('This module is not ported yet. Verifying it would be a claim about code that does not exist.');
+    return;
+  }
+  local[id] = local[id] || {};
+  if (now === m[key]) delete local[id][key]; else local[id][key] = now;
+  if (Object.keys(local[id]).length === 0) delete local[id];
+  save();
+  render();
+}
+
+function render() {
+  const mods = data.modules.map(m => ({ ...m, difficulty: m.effort * m.risk }));
+  const total = mods.length;
+  const ported = mods.filter(m => state(m, 'ported')).length;
+  const verified = mods.filter(m => state(m, 'verified')).length;
+
+  pv.textContent = `${ported} / ${total}`;
+  vv.textContent = `${verified} / ${total}`;
+  pf.style.width = `${(100 * ported / total).toFixed(1)}%`;
+  vf.style.width = `${(100 * verified / total).toFixed(1)}%`;
+
+  const dirty = Object.keys(local).length;
+  pending.textContent = dirty ? `${dirty} unsaved change${dirty > 1 ? 's' : ''}` : '';
+
+  if (!waveOf.size) computeWaves(mods);
+
+  const wantPhase = phase.value;
+  const wantBand = bandSel.value;
+  let rows = mods;
+  if (wantPhase) rows = rows.filter(m => String(m.phase) === wantPhase);
+  if (wantBand === 'r') rows = rows.filter(m => m.difficulty >= 15);
+  if (wantBand === 'o') rows = rows.filter(m => m.difficulty >= 10);
+  if (filter === 'todo') rows = rows.filter(m => !state(m, 'ported'));
+  if (filter === 'ported') rows = rows.filter(m => state(m, 'ported') && !state(m, 'verified'));
+  if (filter === 'done') rows = rows.filter(m => state(m, 'verified'));
+  if (filter === 'ready') rows = rows.filter(m => isReady(m));
+
+  // Grouping by wave answers "what do I do next"; grouping by phase answers "what is this
+  // part of". The first is the question this board exists for, so it is the default.
+  const groupByWave = order.value === 'order';
+  const groups = new Map();
+  for (const m of rows) {
+    const key = groupByWave ? waveOf.get(m.id) : m.phase;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(m);
+  }
+
+  let html = `<table><thead><tr>
+    <th class="num">#</th><th>Module</th><th class="num">E</th><th class="num">R</th><th class="num">Dif</th>
+    <th class="num">Ref lines</th><th>Replaces</th><th>Why the risk</th>
+    <th class="mid">Port</th><th class="mid">Ver</th></tr></thead><tbody>`;
+
+  for (const [key, group] of [...groups.entries()].sort((a, b) => a[0] - b[0])) {
+    group.sort((a, b) => (waveOf.get(a.id) - waveOf.get(b.id)) || (b.difficulty - a.difficulty));
+    const done = group.filter(m => state(m, 'verified')).length;
+    const label = groupByWave
+      ? `Wave ${key} &middot; ${key === 1 ? 'nothing blocks these' : 'unblocked once wave ' + (key - 1) + ' is verified'}`
+      : `Phase ${key} &middot; ${data.phases[key]}`;
+    html += `<tr class="phase-row"><td colspan="10">${label} &middot; ${done}/${group.length} verified</td></tr>`;
+    for (const m of group) {
+      const b = band(m.difficulty);
+      const pOn = state(m, 'ported'), vOn = state(m, 'verified');
+      html += `<tr${isReady(m) ? ' class="ready"' : ''}>
+        <td class="num">${waveOf.get(m.id)}</td>
+        <td><div class="name">${m.name}</div><div class="proj">${m.project}</div></td>
+        <td class="num">${m.effort}</td><td class="num">${m.risk}</td>
+        <td class="num"><span class="dot ${b}"></span>${m.difficulty}</td>
+        <td class="num">${m.refLines ? n(m.refLines) : '&mdash;'}</td>
+        <td class="refs">${m.reference.join('<br>') || '&mdash;'}</td>
+        <td class="why">${m.why}</td>
+        <td class="mid"><button class="check ${pOn ? 'done' : ''} ${isLocal(m, 'ported') ? 'local' : ''} locked"
+            title="Agents set this by committing modules.json" disabled>&#10003;</button></td>
+        <td class="mid"><button class="check ${vOn ? 'done' : ''} ${isLocal(m, 'verified') ? 'local' : ''}"
+            data-id="${m.id}" title="Yours to click">&#10003;</button></td>
+      </tr>`;
+    }
+  }
+  out.innerHTML = html + '</tbody></table>';
+
+  for (const el of out.querySelectorAll('.check[data-id]')) {
+    el.onclick = () => toggle(el.dataset.id, 'verified');
+  }
+}
+
+const bandSel = document.getElementById('band');
+
+document.getElementById('export').onclick = async () => {
+  const merged = {
+    ...data,
+    modules: data.modules.map(m => ({ ...m, ported: state(m, 'ported'), verified: state(m, 'verified') })),
+  };
+  const text = JSON.stringify(merged, null, 2) + '\n';
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Copied. Paste over docs/migration/modules.json and commit, then run\nnode tools/migration/board.mjs');
+  } catch {
+    const blob = new Blob([text], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'modules.json';
+    a.click();
+  }
+};
+
+document.getElementById('reset').onclick = () => {
+  if (!Object.keys(local).length) return;
+  if (confirm('Discard your unsaved clicks?')) { local = {}; save(); render(); }
+};
+
+for (const b of document.querySelectorAll('button[data-f]')) {
+  b.onclick = () => {
+    filter = b.dataset.f;
+    document.querySelectorAll('button[data-f]').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  };
+}
+phase.onchange = render;
+bandSel.onchange = render;
+order.onchange = render;
+
+fetch(SOURCE)
+  .then(r => r.ok ? r.json() : Promise.reject(new Error(`${r.status} fetching ${SOURCE}`)))
+  .then(d => {
+    data = d;
+    for (const [k, v] of Object.entries(d.phases)) {
+      phase.add(new Option(`Phase ${k}: ${v}`, k));
+    }
+    render();
+  })
+  .catch(e => { out.innerHTML = `<p class="err">Could not load ${SOURCE}: ${e.message}</p>`; });
+</script>
