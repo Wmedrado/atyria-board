@@ -205,8 +205,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; mesh and material readers cover measured rectangle, sphere/box and skinned-MRM prefixes; MRM geometry v5, LOD offset tables, render passes, geomorphs, influence lists, skin blocks, skin subsets, complete observed LOD bodies, ordered LOD sequence composition, measured v4 sphere records, and the rectangle02 vertex subset plus measured matrix/render/index/AABB tail are covered by golden vectors. Remaining v4 runtime integration and unobserved skin semantics remain pending measured corpus data.",
+      "implemented": true,
+      "implementedNote": "Golden-vector decoders cover observed SHAP/CMesh (rectangle v1, sphere/box v4 vertices, rectangle02 subset/index/AABB tail), MRM v5 body composition, eleven measured LOD bodies with passes/geomorphs/influence/skin subsets, and ordered body-plus-LOD sequence. Ran dotnet test tests/Atyria.Assets.Tests (117). Not exercised: runtime CLOD distance selection, CMeshMultiLod slot picking, or a full characters_shapes.bnp corpus sweep; unobserved skin-weight semantics and remaining shape families stay behind measured captures.",
       "verified": false
     },
     {
