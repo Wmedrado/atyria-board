@@ -843,7 +843,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "CombatResolver retains the scalar health contract and CombatTables now expose the observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data; per-damage-type effect ordering and oracle verification remain pending.",
+      "implementedNote": "CombatResolver retains the scalar health contract and CombatTables now expose the observed quality 1-21 weapon, armor, and bounded hit-chance tables as integer fixed-point data, including capped proportional armor absorption; per-damage-type effect ordering and oracle verification remain pending.",
       "verified": false
     },
     {
