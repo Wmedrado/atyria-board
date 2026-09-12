@@ -206,7 +206,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle and v4 sphere/box prefixes, and MeshMaterialPrefixReader reaches the measured v6 geometry boundary with dirty-room vectors. Static rectangle geometry is decoded; MeshDefinition remains synthetic and full v4 geometry plus MRM body decoding with two real LOD levels remains pending measured corpus data.",
+      "implementedNote": "ShapeStreamHeader decodes the observed SHAP/CMesh container prefix; MeshBasePrefixReader covers the real v1 rectangle and v4 sphere/box prefixes, MeshMaterialPrefixReader reaches the measured v6 geometry boundary, and MeshVertexBufferPrefixReader captures the v4 mesh's version-two buffer prefix with dirty-room vectors. Static rectangle geometry is decoded; the remaining v4 payload and MRM body decoding with two real LOD levels remain pending measured corpus data.",
       "verified": false
     },
     {
