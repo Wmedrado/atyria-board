@@ -77,7 +77,7 @@
       "needs": [],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "JobScheduler retains explicit Action draining and adds allocation-avoiding struct IJob dispatch through the thread pool; 32 core tests pass.",
       "verified": false
     },
     {
@@ -384,7 +384,7 @@
       ],
       "ported": true,
       "implemented": true,
-      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
+      "implementedNote": "Bounded allocation-free pass graph validates capacity, duplicate/unknown dependencies, stable topological order, and bounds; FrameGraphTests cover the contract vectors.",
       "verified": false
     },
     {
