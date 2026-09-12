@@ -44,8 +44,8 @@
       "why": "Must be reproducible across platforms and stable forever: changing the sequence invalidates every stored replay.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "SeededRandom implements deterministic PCG-XSH-RR, unbiased bounded uints, signed ranges, booleans, and Fix64 values; Atyria.Core.Tests passes with 31 tests including golden vectors and invalid-range cases.",
       "verified": false
     },
     {
@@ -60,8 +60,8 @@
       "why": "Shapes the allocation behaviour of everything above it, so getting it wrong is expensive to undo.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -76,8 +76,8 @@
       "why": "The extract boundary between simulation and renderer is a data-layout decision, so it is taken now or not at all. Every other renderer feature can be added later; parallelism cannot.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -95,8 +95,8 @@
         "core.rng"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -111,8 +111,8 @@
       "why": "Protects the premise of the whole project, and a clean result proves less than people assume.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -127,8 +127,8 @@
       "why": "Every fidelity claim in phase 4 depends on it. Partly exists already as the playtest harness.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -145,8 +145,8 @@
         "render.capture"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -165,8 +165,8 @@
         "core.ids"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -185,8 +185,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -205,8 +205,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -226,8 +226,8 @@
         "assets.mesh"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -246,8 +246,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -266,8 +266,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "SeededRandom implements deterministic PCG-XSH-RR, unbiased bounded uints, signed ranges, booleans, and Fix64 values; Atyria.Core.Tests passes with 31 tests including golden vectors and invalid-range cases.",
       "verified": false
     },
     {
@@ -286,8 +286,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -306,8 +306,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -326,8 +326,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -346,8 +346,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -364,8 +364,8 @@
         "core.ids"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -383,8 +383,8 @@
         "core.jobs"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -406,8 +406,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -429,8 +429,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -447,8 +447,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -469,8 +469,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -491,8 +491,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -513,8 +513,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -531,8 +531,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -549,8 +549,8 @@
         "render.postfx"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -568,8 +568,8 @@
         "render.framegraph"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -589,8 +589,8 @@
         "assets.ig"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -610,8 +610,8 @@
         "core.ids"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -631,8 +631,8 @@
         "core.fixed"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -652,8 +652,8 @@
         "world.grid"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -671,8 +671,8 @@
       "why": "474 properties and 335 impulses. A previous attempt assumed flat message ids and was wrong: addressing is a route through the tree.",
       "needs": [],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -691,8 +691,8 @@
         "contract.compiler"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -712,8 +712,8 @@
         "net.codec"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -733,8 +733,8 @@
         "world.spatial"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Replication vectors cover bounded storage, same-value suppression, dirty update collection, slot ordering, and overflow retention.",
       "verified": false
     },
     {
@@ -753,8 +753,8 @@
         "core.fixed"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -774,8 +774,8 @@
         "net.transport"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover initial state, admission, duplicate/full rejection, lookup, release, count tracking, zeroed failure outputs, and session-number reuse in Atyria.Server.Tests.",
       "verified": false
     },
     {
@@ -796,8 +796,8 @@
         "server.tick"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "EntityRegistry covers unique valid IDs, O(1) dictionary lookup, removal deactivation, clear, count, and invalid/duplicate registration vectors in Atyria.Server.Tests.",
       "verified": false
     },
     {
@@ -819,8 +819,8 @@
         "server.tick"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -842,8 +842,8 @@
         "content.extract"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "CombatResolver applies power-minus-armor damage with health clamp; CombatResolverTest passes. Hit tables and content multipliers remain structural placeholders.",
       "verified": false
     },
     {
@@ -862,8 +862,8 @@
         "sim.combat"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Bounded effect replacement/stack identity, tick-based expiry, slot-order span collection, capacity, and invalid-input behavior pass in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -883,8 +883,8 @@
         "sim.effects"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover successful casts, mana exhaustion, invalid cost/power, state preservation, zero-cost casts, and result reporting in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -904,8 +904,8 @@
         "content.extract"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "CraftResolver validates positive integer inputs and available materials, consumes only on success, and passes the documented structural vectors; oracle comparison remains pending.",
       "verified": false
     },
     {
@@ -925,8 +925,8 @@
         "core.fixed"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -946,8 +946,8 @@
         "content.extract"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover stack merging, slot-order removal, capacity and invalid-input rejection, and query consistency in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -969,8 +969,8 @@
         "assets.primitive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "AiController perception radius, chase/attack/disengage state machine; AiBehaviorTests pass. Group spawn cycles not yet implemented.",
       "verified": false
     },
     {
@@ -990,8 +990,8 @@
         "sim.character"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "MissionInstance tracks multi-objective progress and completion; MissionManagerTests pass in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -1010,8 +1010,8 @@
         "sim.character"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Guild roster add/remove with rank and leader protection; GuildDefinitionTests pass in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -1031,8 +1031,8 @@
         "sim.combat"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover neutral initialization, partial contest, threshold transfer, progress reset, and controller recovery in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -1051,8 +1051,8 @@
         "sim.inventory"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover listing validation, cancellation, purchase overflow, trade confirmation, atomic settlement, rollback constraints, and cancellation state in Atyria.Sim.Tests.",
       "verified": false
     },
     {
@@ -1071,8 +1071,8 @@
         "net.transport"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Structural vectors cover private delivery, broadcast delivery, missing recipients, null messages, replacement subscriptions, and unsubscribe behavior in Atyria.Server.Tests.",
       "verified": false
     },
     {
@@ -1092,8 +1092,8 @@
         "sim.character"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "InMemoryPersistenceStore saves and loads PlayerDataRecord async; PersistenceStoreTests pass in Atyria.Server.Tests.",
       "verified": false
     },
     {
@@ -1112,8 +1112,8 @@
         "render.backend"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1133,8 +1133,8 @@
         "contract.compiler"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1154,7 +1154,7 @@
       ],
       "ported": true,
       "implemented": false,
-      "implementedNote": "",
+      "implementedNote": "Open/close/focus lifecycle and z-order exist, but the documented docking and dragging contract is not implemented yet.",
       "verified": false
     },
     {
@@ -1173,8 +1173,8 @@
         "ui.bindings"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "UIActionRouter registers and dispatches named handlers with optional parameters; Atyria.Ui.Tests passes structural vectors.",
       "verified": false
     },
     {
@@ -1195,8 +1195,8 @@
         "render.mesh"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "ClientSession lifecycle, ClientMirror property deltas, and ClientHost UDP hello/tick/delta loop compile and pass structural tests in Atyria.Client.Tests; oracle comparison remains pending.",
       "verified": false
     },
     {
@@ -1217,8 +1217,8 @@
         "assets.skeleton"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Client entity vectors cover transform interpolation, EAnimationState target blending, manager tick batching, visible entity add/remove, and invalid ID rejection; ClientEntityTests pass.",
       "verified": false
     },
     {
@@ -1236,8 +1236,8 @@
         "tools.bench"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Settings vectors cover defaults/reset, JSON persistence, missing or malformed file fallback, and resolution/volume normalization; 10 client tests pass.",
       "verified": false
     },
     {
@@ -1256,8 +1256,8 @@
         "assets.archive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1278,8 +1278,8 @@
         "assets.primitive"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1298,8 +1298,8 @@
         "assets.ig"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1316,8 +1316,8 @@
         "content.extract"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "Implementation and structural tests were present in the verified worktree snapshot at resume.",
       "verified": false
     },
     {
@@ -1335,8 +1335,8 @@
         "server.entities"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "QaController steps GameClock, spawns entities, and snapshots EntityRegistry state; Atyria.Qa.Tests passes structural vectors.",
       "verified": false
     },
     {
@@ -1353,8 +1353,8 @@
         "qa.control"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "ScenarioRunner executes registered IGameScenario instances against QaController; Atyria.Qa.Tests passes structural vectors.",
       "verified": false
     },
     {
@@ -1371,8 +1371,8 @@
         "qa.control"
       ],
       "ported": true,
-      "implemented": false,
-      "implementedNote": "",
+      "implemented": true,
+      "implementedNote": "tools/mcp/bridge.mjs exposes step_ticks, get_clock_info, and get_active_entities over JSON-RPC stdin/stdout per qa.mcp spec.",
       "verified": false
     }
   ]
